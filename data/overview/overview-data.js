@@ -153,6 +153,7 @@ var overviewData = {
           tag: 'caption',
           text: '<em>A New Effort to Assess African Maritime Security</em>'
         },
+    
         // {
         //   tag: 'legend',
         //   text: 'Map Legend',
@@ -169,7 +170,7 @@ var overviewData = {
         },
         {
           tag: 'p',
-          html: 'This interactive data feature is organized around the nine core themes that emerge in the regions major maritime security strategies, including the Yaoundé Code of Conduct, Djibouti Codes of Conduct, Lome Charter, and African Integrated Maritime Strategy (AIMS) 2050. We are creating these measures to support progress toward their objectives. Scores reflect pu We are creating these measures to support progress toward their objectives. Scores reflect publicly available data, as well as extensive collaboration with African militaries and governments, international organizations, African and Western non-governmental organizations, and other stakeholders with a intimate understanding of the African maritime security environment.'
+          html: 'This interactive data feature is organized around the nine core themes that emerge in the region\'s major maritime security strategies, including the Yaoundé Code of Conduct, Djibouti Codes of Conduct, Lome Charter, and African Integrated Maritime Strategy (AIMS) 2050. We are creating these measures to support progress toward their objectives. Scores reflect publicly available data, as well as extensive collaboration with African militaries and governments, international organizations, African and Western non-governmental organizations, and other stakeholders with a intimate understanding of the African maritime security environment.'
         },
         {
           tag: 'p',
