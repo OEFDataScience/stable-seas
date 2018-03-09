@@ -49,7 +49,7 @@ var internationalCooperationData = {
       },
       els: [{
           tag: 'h1',
-          text: 'International whatever Cooperation',
+          text: 'International Cooperation',
         },
         {
           tag: 'caption',
