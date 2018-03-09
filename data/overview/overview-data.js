@@ -428,16 +428,12 @@ var overviewData = {
           html: 'From the Gulf of Aden to South Africa, maritime mixed migration is nearly omnipresent. Some of those seeking better socioeconomic conditions head south along the Tanzanian and Mozambican coasts for South Africa. Many more take the dangerous journey north through Somalia or Djibouti toward the Arabian Peninsula. At all stages, they are vulnerable to forced labor, sex trafficking, and other forms of degradation.'
         },
         {
-          tag: 'p'
-          html: 'The transnational criminal networks in this area are entrenched and their activities fuel conflict around the globe. Illicit trading in arms, wildlife, drugs, and contraband links East African ports to distant markets in the Middle East, Southeast Asia, and beyond. These activities provide weapons for African insurgent groups, fill the coffers of separatists and drug cultivators in South Asia, and corrupt the massively important seaports that oversee the majority of Africa\'s international commerce.'
-        }
-        {
           tag: 'bigtext',
           html: 'Though Somali piracy has declined, war in Yemen is bringing new maritime threats.'
         },
         {
           tag: 'p',
-          html: 'The waters in the north, in the Gulf of Aden and around Somalia, are among the least stable on the planet. Besides the latent threat of <a class="piracy inline" href="../../piracy">Somali pirates,</a> several military vessels have been targeted and hit by anti-ship missiles supposedly from militants in Yemen. Seaborne improvised explosive devices resembling sea mines have been spotted, and there have been incidents of <a class="piracy inline" href="../../piracy#5">attempted maritime terrorism</a> against shipping and oil terminals in the region. These events have the potential to affect international shipping traffic through the Red Sea, which is among the world’s most important global transportation chokepoints.'
+          html: 'The waters in the north, in the Gulf of Aden and around Somalia, are possibly some of the most unstable on the planet. Besides the latent threat of <a class="piracy inline" href="../../piracy">Somali pirates,</a> several military vessels have been targeted and hit by anti-ship missiles supposedly from militants in Yemen. Seaborne improvised explosive devices resembling sea mines have been spotted, and there have been incidents of <a class="piracy inline" href="../../piracy#5">attempted maritime terrorism</a> against shipping and oil terminals in the region. These events have the potential to affect international shipping traffic through the Red Sea, which is among the world’s most important global transportation chokepoints.'
         },
 
         {
@@ -450,7 +446,7 @@ var overviewData = {
         },
         {
           tag: 'p',
-          html: 'Maritime enforcement capacity remains low throughout the region, but new developments, including the 2017 Jeddah Amendment to the Djibouti Code of Conduct, will enhance regional cooperation and increase the likelihood that multinational efforts to improve maritime security will be successful.'
+          html: 'Many gaps exist in combating these threats primarily due to the lack of effective governance over the maritime space and the underdeveloped capacities of maritime law enforcement and the supporting agencies. But new developments, including the 2017 Jeddah Amendment to the Djibouti Code of Conduct, will enhance regional cooperation and increase the likelihood that multinational efforts to improve maritime security will be successful.'
         }
       ] // end of els array
     },
@@ -555,7 +551,7 @@ var overviewData = {
         },
         {
           tag: 'caption',
-          text: 'The Global Hotspot for Piracy, Armed Robbery, and Extractives Crime'
+          text: 'The global hotspot for piracy, armed robbery, and extractives crime'
         },
         // {
         //   tag: 'legend',
@@ -575,11 +571,11 @@ var overviewData = {
 
         {
           tag: 'bigtext',
-          html: 'Oil wealth boosts national incomes but also attracts transnational crime.'
+          html: 'Oil wealth boosts national incomes, but also attracts transnational crime.'
         },
         {
           tag: 'p',
-          html: 'There have been repeated attacks against shipping and oil infrastructure both at sea and on shore within the Niger Delta. These events have the potential to affect international shipping traffic. Even more worrisome for the workers who either transit the Gulf of Guinea as seafarers or as employees of extractive industries is the highly efficient system of kidnapping for ransom that has developed over the last few years. The frequency and violence of these kidnappings have earned the Gulf of Guinea the distinction of the world\'s most violent maritime space.'
+          html: 'There have been repeated attacks against shipping and oil infrastructure both at sea and on shore within the Niger Delta. These events have the potential to affect international shipping traffic. Even more worrisome for the workers who either transit the Gulf of Guinea as seafarers or as employees of extractive industries is the highly efficient system of kidnapping for ransom that has developed over the last few years. The frequency and violence of these kidnappings have earned the Gulf of Guinea the reputation of being some of the world’s most dangerous waters.'
         },
         {
           tag: 'p',
@@ -802,28 +798,12 @@ var overviewData = {
       },
       els: [{
           tag: 'h1',
-          text: 'About These Scores',
+          text: 'About the Scores',
         },
         {
           tag: 'caption',
-          text: 'Informing Improved Maritime Security Strategies'
+          text: 'Informing evidence-based maritime security strategies'
         },
-        {
-          tag: 'p',
-          html:'The Stable Seas Maritime Security Index combines original country research with information from external stakeholders and secondary sources to create country-by-country scores on nine maritime security issues: 1) international cooperation, 2) the rule of law, 3) maritime enforcement, 4) coastal welfare, 5) development of the blue economy, 6) fisheries, 7) piracy and armed robbery at sea, 8) illicit maritime trades, and 9) maritime mixed migration.'
-        },
-        {
-          tag: 'p',
-          html: 'Each score has a possible range of 0 to 100, with higher scores always representing more desirable outcomes. Issues that have become more localized, like piracy and armed robbery, are very high for much of the region but acutely low in concentrated hotspots. More pervasive problems, like illicit mariitme trades, are represented by very low scores nearly everywhere.'
-        },
-        {
-          tag: 'p',
-          html: 'The measures presented here reflect the best available information about complex and under-reported issues occurring in expansive remote areas. Somes issue scores necessarily reflect best faith estimates rather than exact and verifiable figures. Readers can find methodology summaries throughout the website, along with complete datasets and technical notes from our main page at wwww.stableseas.org.'
-        },
-        {
-          tag: 'p',
-          html: 'We plan to update these scores annually as new information becomes available.'
-        }
 
       ] // end of els array
     }
