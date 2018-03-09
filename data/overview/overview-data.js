@@ -811,15 +811,15 @@ var overviewData = {
         {
           tag: 'p',
           html:'The Stable Seas Maritime Security Index combines original country research with information from external stakeholders and secondary sources to create country-by-country scores on nine maritime security issues: 1) international cooperation, 2) the rule of law, 3) maritime enforcement, 4) coastal welfare, 5) development of the blue economy, 6) fisheries, 7) piracy and armed robbery at sea, 8) illicit maritime trades, and 9) maritime mixed migration.'
-        }
+        },
         {
           tag: 'p',
           html: 'Each score has a possible range of 0 to 100, with higher scores always representing more desirable outcomes. Issues that have become more localized, like piracy and armed robbery, are very high for much of the region but acutely low in concentrated hotspots. More pervasive problems, like illicit mariitme trades, are represented by very low scores nearly everywhere.'
-        }
+        },
         {
           tag: 'p',
           html: 'The measures presented here reflect the best available information about complex and under-reported issues occurring in expansive remote areas. Somes issue scores necessarily reflect best faith estimates rather than exact and verifiable figures. Readers can find methodology summaries throughout the website, along with complete datasets and technical notes from our main page at wwww.stableseas.org.'
-        }
+        },
         {
           tag: 'p',
           html: 'We plan to update these scores annually as new information becomes available.'
