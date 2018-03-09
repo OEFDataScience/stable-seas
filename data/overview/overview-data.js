@@ -151,7 +151,7 @@ var overviewData = {
         },
         {
           tag: 'caption',
-          text: '<em>A new effort to measure and map maritime security in sub-Saharan Africa</em>'
+          text: '<em>A New Effort to Assess African Maritime Security</em>'
         },
         // {
         //   tag: 'legend',
@@ -160,25 +160,21 @@ var overviewData = {
         // },
         {
           tag: 'p',
-          html: 'The Stable Seas Maritime Security Index is a first-of-its-kind effort to measure and map a range of threats to maritime governance. By bringing diverse challenges like <a class="piracy inline" href="../../piracy">piracy</a>, <a class="illicit-trade inline" href="../../illicit-trade">smuggling</a>, and <a class="maritime-enforcement inline" href="../../maritime-enforcement">capacity-building</a> into one comprehensive analysis, we can better understand how these issues intersect to affect maritime security.'
+          html: 'The Stable Seas Maritime Security Index is a new effort to measure and map nine facets of good maritime governance: 1) international cooperation, 2) the rule of law, 3) maritime enforcement capacity, 4) coastal welfare, 5) development of the blue economy, 6) fisheries, 7) piracy and armed robbery at sea, 8) illicit maritime trades, and 9) maritime mixed migration. By bringing these nine issues into one comprehensive analysis, we can better understand how they intersect to affect maritime security. This improved understanding can then inform stronger maritime security policy.'
         },
+
         {
-          tag: 'video',
-          videoId: 'AXQHK213mFA',
-          thumb: '../../assets/overview/stable-seas-main-video-thumb.png' // ###
-        },
-        {
-          tag: 'caption',
-          text: '<em>Introducing the Stable Seas Maritime Security Index.</em>'
+          tag: 'p',
+          html: 'The inaugural edition of our report covers the 30 exclusive economic zones (EEZs) that envelop sub-Saharan Africa from the mid-Atlantic to the Gulf of Aden. Countries in this region face unique maritime security challenges and overcoming them will require international coordination and careful consideration of the interdependencies linking these maritime threats. This site highlights these linkages by combining quantitative measures with close examinations of important case studies from across the region.'
         },
         {
           tag: 'p',
-          html: 'The inaugural edition of our report covers the 30 exclusive economic zones (EEZs) that envelop sub-Saharan Africa from the mid-Atlantic to the Gulf of Aden. Countries in this region face unique maritime security challenges and overcoming them will require   <a class="international-cooperation inline" href="../../international-cooperation">international coordination</a> and careful consideration of the interdependencies linking these maritime threats. This site highlights these linkages by combining quantitative measures with close examinations of important case studies from across the region.'
+          html: 'This interactive data feature is organized around the nine core themes that emerge in the regions major maritime security strategies, including the Yaoundé Code of Conduct, Djibouti Codes of Conduct, Lome Charter, and African Integrated Maritime Strategy (AIMS) 2050. We are creating these measures to support progress toward their objectives. Scores reflect pu We are creating these measures to support progress toward their objectives. Scores reflect publicly available data, as well as extensive collaboration with African militaries and governments, international organizations, African and Western non-governmental organizations, and other stakeholders with a intimate understanding of the African maritime security environment.'
         },
         {
           tag: 'p',
-          html: 'Through new maritime security strategies like the Yaoundé and Djibouti Codes of Conduct, African states have redefined maritime security as a constellation of complicated and intersecting issues. To support efforts to disentangle these activities and bring sustainable maritime security, our team is working toward a new index that will measure progress toward each of these related goals. We are creating these measures by partnering with African governments, international organizations, non-governmental organizations, and other stakeholders with an intimate understanding of the African maritime security environment. We plan to release the inaugural report in late 2017.'
-        },
+          html: 'Please browse the site by using the colored toolbar across the top of the screen to view different issues areas. The blue toggle button at the top of the page will allow you to view information country-by-country, rather than issue-by-issue.'
+        }
         // { tag: 'overviewIndexTable',
         //   col: 'weakness'
         // },
