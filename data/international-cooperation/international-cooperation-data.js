@@ -23,15 +23,17 @@ var internationalCooperationData = {
         description: 'Introduce the issue.'
       },
       map: {
+        type: 'continuous',
         scale: [],
         classes: 'card-eez-layer',
         translate: [],
         highlights: [],
         tooltip: true,
+        legend: 'International Cooperation Score',
         tooltipHTML: function(iso) {
 
-          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso].index;
-          tooltipVal = Math.round((tooltipVal * 100));
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['international-cooperation-index'];
+          tooltipVal = Math.round(tooltipVal * 100);
           updatePointer(tooltipVal);
           return "International Cooperation:<br />" + tooltipVal + " / 100";
 
@@ -44,7 +46,7 @@ var internationalCooperationData = {
         },
         switch: function(index) {
           // Choropleth of scores
-          choropleth(index, 1, 'index');
+          choropleth(index, 1, 'international-cooperation-index');
         }
       },
       els: [{
@@ -61,51 +63,75 @@ var internationalCooperationData = {
         //   legendContent: '<em>Highlighted countries are party to all parts of UNCLOS, including Part XI.'
         // },
         {
-          tag: 'p',
-          html: 'The security and governance of African waters is not an interest exclusive to African nations. Maritime instability causes economic, security, and social problems with effects that ripple across the globe. Acknowledging this interdependency, a variety of international actors—from individual states to global institutions—have facilitated programs which aim to build a more secure African maritime domain.'
+          tag: 'blockquote',
+          html: '“We must continue in good spirit of partnership and alliances to support our continent and ensure that trade can advance freely. No one nation can deal with the challenges that we face in the world today. The ocean is so vast that a united effort is required to make sure that our oceans are safe.”',
+          source: 'Rear Adm. B.K. Mhlana, Fleet Flag Officer<br />South African Navy<sup>1</sup>',
+          link: 'http://www.navy.mil/submit/display.asp?story_id=99689' // What about internal references?
         },
         {
-          tag: 'h3',
-          text: 'UNCLOS in Africa',
-        },
-        // { tag: 'caption',
-        //   text: 'Enhanced sovereignty over maritime resources'
-        // },
-        //  { tag: 'legend',
-        //     text: 'Map Legend',
-        //    legendContent: '<em></em>.'
-        //    },
-        {
           tag: 'p',
-          html: 'The United Nations Convention on the Law of the Sea (UNCLOS) codified the growing preference among countries to have increased legal rights to govern larger maritime spaces, reducing conflict over competing claims to offshore resources.'
+          html: 'The effects of maritime instability in sub-Saharan Africa ripple around the world and make international cooperation a prerequisite for a secure African maritime domain. States must engage with their neighbors and foreign entities that use their waters to protect freedom of navigation and marine resources as well as counter regional security threats. The international cooperation score measures participation in and commitment to multilateral efforts that facilitate maritime security and governance.'
         },
         {
           tag: 'img',
-          src: '../../assets/international-cooperation/maritime_zones_eez.png', // ### need image path and in assets/international-cooperation/
-          alt: 'The legal definition definition of \'exclusive economic zone\' was established under UNCLOS.',
-          caption: 'The legal definition definition of \'exclusive economic zone\' was established under UNCLOS.'
+          src: '../../assets/international-cooperation/international-cooperation-coin-cloud.png',
+          alt: 'International Cooperation and related issues.' // ###ks have to put x img here
+          //caption: 'al estimate.'
         },
         {
           tag: 'p',
-          html: 'This historic advance in maritime governance was actively shaped and supported by African nations. African states were especially strong advocates for UNCLOS III and the establishment of Exclusive Economic Zones (EEZs), which grant states the right to govern space and resources up to 200 nautical miles from their shores. African support allowed this concept to be adopted into international law<sup>1</sup> despite the concerns of many developed nations that had become accustomed to having unfettered access to resources off the coasts of developing nations.'
+          html: 'We find the international cooperation score to be strongly linked to a stronger rule of law and greater maritime enforcement capacity. This is not surprising; sound domestic political institutions are necessary for meaningful participation in regional and global legal efforts. Countries that participate in global and regional efforts are more likely to partake in multilateral initiatives to share information, build regional maritime domain awareness, and improve a country’s maritime enforcement capacity.'
         },
         {
           tag: 'p',
-          html: 'The main ramification of UNCLOS for sub-Saharan Africa was economic. Suddenly, African nations had a legal framework within which they could assert their rights to govern and share in the profits of the resources off of their shores. Potential financial gains for African states from the taxation of maritime resources continue to be massive, but equally significant is the assertion of sovereignty to govern these resources in a manner which protects the long-term economic, environmental, and security interests of their people.'
+          html: 'Strong international cooperation scores are also linked to better maritime mixed migration scores. This suggests the same countries that participate in global maritime legal agreements are also better at reducing the vulnerability of migrants to human trafficking and various forms of exploitation.'
         },
         {
           tag: 'p',
-          html: 'Protecting the rights of African maritime states under UNCLOS needs to be a priority for all actors interested in maintaining maritime security. The case of Somali piracy demonstrates how failure to observe the rights to maritime governance established in UNCLOS III can generate grievances<sup>2</sup> which give rise to other threats. Rather than exploiting the inability of many sub-Saharan states to effectively enforce their sovereignty in their maritime domains, actors interested in maritime security need to partner with such states in order to build capacity to govern and enforce law in these spaces.'
+          html: 'This section is divided into five parts. The first will discuss global legal efforts, including seven multilateral treaties related to the maritime domain. The second will highlight the 2050 Africa’s Integrated Maritime Strategy (AIMS 2050) and Lomé Charter as examples of continental coordination. Next, we compare two regional maritime security strategies: the Yaoundé Code of Conduct (West and Central Africa) and the Jeddah Amendment to the Djibouti Code of Conduct (East Africa and the Arabian Peninsula). The fourth part highlights disputes of maritime boundaries as impediments to governance. The final section concludes with a discussion of our methodology.'
         },
+
+        // {
+        //   tag: 'p',
+        //   html: 'International cooperation is strongly linked to a stronger rule of law and greater maritime enforcement capacity. In countries with high international cooperation scores, maritime mixed migration is relatively low.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: '*** An image here? Would fill the space nicely ***'
+        // },
+        // {
+        //   tag: 'img',
+        //   src: '../../assets/maritime-enforcement/cameroon-coast-guard.jpg',
+        //   alt: 'Cameroon Coast Guard',
+        //   caption: 'Centre for Multinational Coordination (CMC) in Douala, Cameroon. Photo by Jean-Pierre Larroque, OEF.'
+        //   // from http://www.ghananewsagency.org/social/ghana-and-u-s-maritime-forces-complete-combined-operation-73501
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'This section is divided into five parts. The first will discuss global legal efforts, including seven multilateral treaties related to the maritime domain. The second will highlight the 2050 Africa’s Integrated Maritime Strategy (AIMS 2050) and Lomé Charter as examples of continental coordination. Next, we compare two regional maritime security strategies: the Yaoundé Code of Conduct (West and Central Africa) and the Jeddah Amendment to the Djibouti Code of Conduct (East Africa and the Arabian Peninsula). The fourth part highlights disputes of maritime boundaries as impediments to governance will follow. The final section will conclude with a discussion of our methodology.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'The main ramification of UNCLOS for sub-Saharan Africa was economic. Suddenly, African nations had a legal framework within which they could assert their rights to govern and share in the profits of the resources off of their shores. Potential financial gains for African states from the taxation of maritime resources continue to be massive, but equally significant is the assertion of sovereignty to govern these resources in a manner which protects the long-term economic, environmental, and security interests of their people.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Protecting the rights of African maritime states under UNCLOS needs to be a priority for all actors interested in maintaining maritime security. The case of Somali piracy demonstrates how failure to observe the rights to maritime governance established in UNCLOS III can generate grievances<sup>2</sup> which give rise to other threats. Rather than exploiting the inability of many sub-Saharan states to effectively enforce their sovereignty in their maritime domains, actors interested in maritime security need to partner with such states in order to build capacity to govern and enforce law in these spaces.'
+        // },
         {
           tag: 'links',
-          items: [{
-              org: '<sup>1</sup> “Reflections on Africa and the Law of the Sea Regime,” <em>CEMLAWS Blog</em>, 24 November 2016,',
-              url: 'http://www.cemlawsafrica.com/blog/reflections-africa-and-law-sea-regime-part-i'
-            },
+          items: [
+            // {
+            //   org: '*** Still need these??*** <sup>1</sup> “Reflections on Africa and the Law of the Sea Regime,” <em>CEMLAWS Blog</em>, 24 November 2016,',
+            //   url: 'http://www.cemlawsafrica.com/blog/reflections-africa-and-law-sea-regime-part-i'
+            // },
+            // {
+            //   org: '<sup>2</sup> Peter Kerins, “Somali Perspectives on Piracy and Illegal Fishing,” Oceans Beyond Piracy,',
+            //   url: 'http://oceansbeyondpiracy.org/publications/somali-perspectives-piracy-and-illegal-fishing'
+            // },
             {
-              org: '<sup>2</sup> Peter Kerins, “Somali Perspectives on Piracy and Illegal Fishing,” Oceans Beyond Piracy,',
-              url: 'http://oceansbeyondpiracy.org/publications/somali-perspectives-piracy-and-illegal-fishing'
+              org: '<sup>1</sup> David Rider, “Exercise Cutlass Express 2015,” <em>Maritime Security Review</em>, 21 November 2014.',
+              url: 'http://www.marsecreview.com/2014/11/exercise-cutlass-express-2015/'
             }
           ]
         }
@@ -130,15 +156,19 @@ var internationalCooperationData = {
         description: 'Global Agreements'
       },
       map: {
+        type: 'continuous',
         scale: [],
         classes: 'card-eez-layer',
         translate: [],
         highlights: [],
         tooltip: true,
+        legend: 'Global Agreements scores',
         tooltipHTML: function(iso) {
-          var output = "";
 
-          return output;
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['ic_agreements'];
+          tooltipVal = Math.round((tooltipVal * 100));
+          updatePointer(tooltipVal);
+          return "Global Agreements:<br />" + tooltipVal + " / 100";
 
         },
         load: function(index, csv) { // ### *** This only should be for the first card ...
@@ -148,120 +178,7 @@ var internationalCooperationData = {
             .classed(layer, true);
         },
         switch: function(index) {
-          // var vals = issueAreaData[issueArea].metadata.countryData;
-          // //    var cat;
-          // var i = 0;
-          // for (iso in vals) {
-          //   var unclos = vals[iso].unclos == 1 ? true : false,
-          //     partXI = vals[iso].partXI == 1 ? true : false,
-          //     fishStocks = vals[iso]["un-fish-stocks"] == 1 ? true : false;
-          //
-          //   if (unclos && partXI && fishStocks) {
-          //     cat = 0;
-          //   } else if (unclos && partXI && !fishStocks) {
-          //     cat = 1;
-          //   } else if (unclos && !partXI && !fishStocks) {
-          //     cat = 2;
-          //   } else if (unclos && !partXI && fishStocks) {
-          //     cat = 4;
-          //   } else {
-          //     cat = 3;
-          //   }
-          //
-          //   d3.selectAll('.country.' + iso)
-          //     .classed('active', true)
-          //     .attr('data-category', cat)
-          //     .attr('data-iso', iso)
-          //     .on('mouseover', function() {
-          //
-          //       if (activeCard == 1) {
-          //
-          //         var catTmp = d3.select(this).attr('data-category');
-          //         var isoTmp = d3.select(this).attr('data-iso');
-          //         d3.select(this)
-          //           .style('fill', function() {
-          //             return colorBrew[catTmp][1];
-          //           })
-          //           .style('stroke', 'black');
-          //
-          //         d3.selectAll('.eez.' + isoTmp)
-          //           .style('fill', function() {
-          //             return colorBrew[catTmp][0];
-          //           });
-          //       }
-          //     })
-          //     .on('mouseleave', function() {
-          //       if (activeCard == 1) {
-          //         var catTmp = d3.select(this).attr('data-category');
-          //         var isoTmp = d3.select(this).attr('data-iso');
-          //         d3.select(this)
-          //           .style('fill', function() {
-          //             return colorBrew[catTmp][0];
-          //           })
-          //           .style('stroke', function() {
-          //             return colorBrew[catTmp][1];
-          //           });
-          //
-          //         d3.selectAll('.eez.' + isoTmp)
-          //           .style('fill', null);
-          //       }
-          //
-          //     })
-          //     //.transition().delay(10 * i)
-          //     .style('fill', function() {
-          //       return colorBrew[cat][0];
-          //     })
-          //     .style('stroke', function () {
-          //       return colorBrew[cat][1];
-          //
-          //     });
-          //
-          //
-          //
-          //   d3.selectAll('.eez.' + iso)
-          //     .classed('active', true)
-          //     //  .transition().delay(10 * i)
-          //     .style('stroke', function() {
-          //       return colorBrew[cat][1];
-          //     })
-          //     .style('stroke-width', '4px')
-          //     .attr('data-category', cat)
-          //     .attr('data-iso', iso)
-          //     .on('mouseover', function() {
-          //       if (activeCard == 1) {
-          //         var catTmp = d3.select(this).attr('data-category');
-          //         var isoTmp = d3.select(this).attr('data-iso');
-          //
-          //         d3.select(this)
-          //           .style('fill', function() {
-          //             return colorBrew[catTmp][0];
-          //           });
-          //
-          //         d3.select('.country.' + isoTmp)
-          //           .style('fill', function() {
-          //             return colorBrew[catTmp][1];
-          //           })
-          //           .style('stroke', 'black');
-          //       }
-          //
-          //     })
-          //     .on('mouseleave', function() {
-          //       if (activeCard == 1) {
-          //         var catTmp = d3.select(this).attr('data-category');
-          //         var isoTmp = d3.select(this).attr('data-iso');
-          //         d3.select(this)
-          //           .style('fill', null)
-          //           .style('stroke-width', '4px');
-          //
-          //         d3.select('.country.' + isoTmp)
-          //           .style('fill', function() {
-          //             return colorBrew[catTmp][0];
-          //           })
-          //           .style('stroke', colorBrew[catTmp][0]);
-          //       }
-          //     });
-          //   i++;
-          // }
+          choropleth(index,1,'ic_agreements');
 
         }
       },
@@ -271,17 +188,32 @@ var internationalCooperationData = {
         },
         {
           tag: 'caption',
-          text: 'XXXXXXXXXXX'
+          text: 'Regional coordination requires strong international law'
         },
         {
-          tag: 'links',
-          items: [{
-              org: '<sup>1</sup> “XXXX,” <em>Add citation</em>, Add date,',
-              url: '#'
-            }
-          ]
+          tag: 'p',
+          html: 'The high seas are governed by international law, and numerous global agreements form a loose governance structure to preserve certain freedoms, like fishing and navigation, protect marine resources, and restrict illicit activities. In the Stable Seas Maritime Security Index, states are measured by their participation and commitment to seven international treaties: <br /><br /><ul><li>United Nations Convention on the Law of the Sea (UNCLOS)</li><li>UNCLOS Part XI</li><li> UN Fish Stocks Agreement</li> <li>Convention for the Suppression of Unlawful Acts against the Safety of Maritime Navigation (SUA)</li><li>UN Food and Agriculture Port State Measures Agreement (PSMA)</li><li>UN Convention against Transnational Organized Crime (CTOT)</li><li>UN Convention against Illicit Traffic in Narcotic Drugs and Psychotropic Substances</li>'
         },
-        //###Insert graphics, video, and blockquote
+        {
+          tag: 'p',
+          html: 'UNCLOS enshrines state practice as international law, with particular regard to the freedom of navigation and maritime boundaries of 12 nautical miles for the territorial sea and 200 nautical miles for the Exclusive Economic Zone. Part XI lays down principles for the responsible exploitation of the seabed. The UN Fish Stocks Agreement establishes rules for the coordinated management of international fisheries. SUA criminalizes threats to the shipping industry and seafarers. CTOT establishes protocols for three transnational organized crimes present in the maritime space: trafficking in persons, smuggling of migrants, and trafficking in arms. The Convention against Illicit Traffic in Narcotic Drugs and Psychotropic Substances establishes an international legal framework for combating international drug trafficking and money laundering, a particular issue of concern to African coasts that have become major transshipment points in the global narcotics trade.'
+        },
+        {
+          tag: 'h3',
+          html: 'Progress through the PSMA'
+        },
+        {
+          tag: 'p',
+          html: 'The 2009 Port State Measures Agreement counters illegal, unreported, and unregulated fishing (IUU) through the application of a new legal regime to fishing vessels docking at foreign ports. Ports of participating states can now inspect foreign fishing vessels, request documentation, and even deny service to suspect vessels. This agreement is a huge step towards combating one of the African continent’s most intractable problems, yet only half of sub-Saharan African states have ratified it. However, the agreement is quickly gaining traction. Kenya, Djibouti, and Namibia all ratified the PSMA in late 2017.'
+        },
+        // {
+        //   tag: 'links',
+        //   items: [{
+        //       org: '<sup>1</sup> “XXXX,” <em>Add citation</em>, Add date,',
+        //       url: '#'
+        //     }
+        //   ]
+        // },
       ] // end of els array
     },
     // { // Card 1
@@ -495,27 +427,28 @@ var internationalCooperationData = {
     //     //###Insert graphics, video, and blockquote
     //   ] // end of els array
     // },
-
     { // Card 2
-      title: 'Who has signed the Lome Charter?',
-      menu: 'AU Efforts',
+      title: 'Continental Coordination',
+      menu: 'Continental Coordination',
       metadata: {
         owner: 'Jay Benson',
         description: 'Move to comprehensive continental strategy.'
       },
       map: {
+        type: 'boolean',
         scale: [],
         classes: '',
         highlights: [],
         tooltip: true,
+        legend: 'Signatories of Lomé Charter',
         tooltipHTML: function(iso) {
 
           var lome = issueAreaData[issueArea].metadata.countryData[iso].lome;
-          if (lome == 1) {
-            return "Signatory of the Lome Charter";
+          if (lome > 0 ) {
+            return "Signatory of the Lomé Charter";
 
           } else {
-            return "Not a signatory of the Lome Charter";
+            return "Not a signatory of the Lomé Charter";
           }
         },
         load: function(index, csv) { // ### *** This only should be for the first card ...
@@ -526,85 +459,56 @@ var internationalCooperationData = {
 
         },
         switch: function(index) {
-          var lome = issueAreaData[issueArea].metadata.countryData;
-
-          var i = 1;
-          var card = 'lome';
-          for (iso in lome) {
-
-            if (lome[iso][card] == 1) {
-              d3.selectAll('.country.' + iso)
-                .classed('active', true)
-                .transition().delay(i * 10)
-                .style('fill', function() {
-                  return themeColor(0.5);
-                })
-                .style('stroke', function() {
-                  return themeColor(1);
-                });
-
-              d3.selectAll('.eez.' + iso)
-                .classed('active', true)
-                .transition().delay(i * 10)
-                //  .style('fill', function () {return rampColor(0.1);})
-                .style('stroke', function() {
-                  return themeColor(1);
-                })
-                .style('stroke-width', '2px');
-              i++;
-            }
-          }
-
-          d3.selectAll('.card-' + index + '-layer')
-            .classed('invisible', false);
+          choropleth(index,1,'lome');
         }
       },
       els: [{
           tag: 'h1',
-          text: 'Who has signed the Lome Charter?',
+          text: 'Continental Coordination',
         },
         {
           tag: 'caption',
           text: 'An ambitious plan for governing African waters'
         },
-        {
-          tag: 'legend',
-          text: 'Map Legend',
-          legendContent: '<em>Highlights represent sub-Saharan countries that have signed the African Union\'s Lomé Charter</em>.'
-        },
+        // {
+        //   tag: 'legend',
+        //   text: 'Map Legend',
+        //   legendContent: '<em>Highlights represent sub-Saharan countries that have signed the African Union\'s Lomé Charter</em>.'
+        // },
         //###Insert Map: This one is tough. Do you think it would be possible to recalculate the scores in the enforcement section but based on the AU’s five regions (only 4 of which are relevant to SSA)? I think it could be interesting for getting an idea of what larger regions in SSA have the capacity to really improve governance towards AIMS
         {
           tag: 'p',
-          html: 'In January of 2014, the African Union (AU) adopted Africa’s Integrated Maritime Strategy (AIMS).<sup>14</sup>  AIMS was created with the goals of providing a framework for enhanced governance in Africa’s maritime domain, developing a platform for shared maritime policy, and facilitating the development of the <a class="blue-economy inline" href="../../blue-economy">Blue Economy</a>. Implementation of the ambitious strategy will be challenging, but the economic, security, and governance ramifications of its success have the potential to transform the African maritime space.'
+          html: 'In January of 2014, the African Union (AU) adopted Africa’s Integrated Maritime Strategy (AIMS)<sup>2</sup> to provide a framework for enhanced governance in Africa’s maritime domain, develop a platform for shared maritime policy, and facilitate the development of the <a class="blue-economy inline" href="./blue-economy">Blue Economy</a>. Implementation of the ambitious strategy continues to be challenging, but huge strides were made by the adoption of the African Charter on Maritime Security, Safety and Development in Africa (the Lomé Charter) in October 2016. The Lomé Charter moves the AIM strategy from a soft law, non-binding approach to a hard law, legally binding treaty which clearly defines the blue economy and emphasizes linkages between maritime safety, security, and marine resource development.'
         },
         {
           tag: 'p',
-          html: 'Like maritime spaces around the world, the African maritime domain has been confronted with a variety of security and governance challenges from <a class="piracy inline" href="../../piracy">piracy</a> to <a class="maritime-mixed-migration inline" href="../../maritime-mixed-migration">human trafficking</a> and <a class="maritime-enforcement inline" href="../../maritime-enforcement#2">waste dumping</a> to <a class="fisheries inline" href="../../fisheries#1">IUU Fishing</a>. AIMS was created as an effort to build a comprehensive, unified set of maritime policies designed to address these challenges and thereby develop the Blue Economy. AIMS is wide-ranging, addressing issues of economic development, environmental protection, maritime crime, disaster management, and maritime law, to name a few.<sup>15</sup>'
+          html: 'The African maritime domain is confronted with a variety of security and governance challenges from <a class="piracy inline" href="../../piracy">piracy</a> to <a class="maritime-mixed-migration inline" href="../../maritime-mixed-migration">human trafficking</a> and <a class="maritime-enforcement inline" href="../../maritime-enforcement#2">waste dumping</a> to <a class="fisheries inline" href="../../fisheries#1">IUU Fishing</a>. AIMS builds a comprehensive, unified set of maritime policies to address these challenges, including issues of economic development, environmental protection, maritime crime, disaster management, and maritime law.<sup>3</sup>'
         },
         {
           tag: 'p',
-          html: 'The document serves as a vision of shared policy. But if it is to become reality, there is still a tremendous amount of work to be done. Coordinated efforts will need to be made in the areas of:'
+          html: 'The document serves as a vision of shared policy, and has been strongly reinforced by the Lomé Charter, but it requires continued commitment. Coordinated efforts will need to be made in the areas of:'
         },
         {
           tag: 'ul',
-          rows: ['Developing political will. AIMS suggests several areas in which domestic laws regarding maritime governance should be synchronized and even puts forward the concept of a Combined Exclusive Maritime Zone of Africa. This level of integration on maritime policy will require substantial political will and the resolution of Africa’s ongoing maritime boundary disputes.', 'Data collection and research. There is a dearth of data and basic research on many maritime issues in Africa. AIMS identifies rectifying this gap as being key to the formation of empirically informed policies.', 'Infrastructure and equipment. In order to implement AIMS, states and other actors in the region will need to significantly upgrade equipment and infrastructure necessary for maritime governance such as patrol vessels, port facilities, and remote sensing systems which enhance maritime domain awareness.', 'In addition to having the necessary physical equipment, African actors will need to train a population of maritime professionals in skillsets such as fisheries management, navigation, and maritime law.']
+          rows:         ['<em>Developing political will.</em> AIMS suggests several areas in which domestic laws regarding maritime governance should be synchronized. This level of integration on maritime policy will require substantial political will and the resolution of ongoing maritime boundary disputes.', '<em>Data collection and research.</em> There is a dearth of data and basic research on many maritime issues in Africa. AIMS identifies rectifying this gap as being key to the formation of empirically informed policies.', '<em>Infrastructure, equipment, and trained personnel.</em> In order to implement AIMS, states and other actors in the region will need to significantly upgrade equipment and infrastructure necessary for maritime domain awareness  such as patrol vessels, port facilities, and remote sensing systems. The region also needs more trained maritime professionals in skill sets such as fisheries management, navigation, and maritime law.']
         },
         {
           tag: 'p',
-          html: 'Perhaps the best way to ensure the success of AIMS would be to establish an institutional home for efforts toward its implementation. The AU currently has no office or department focused exclusively on its maritime initiatives. The establishment of a well-resourced and politically influential entity to oversee these efforts would greatly improve AIMS implementation.'
+          html: 'Perhaps the best way to ensure the success of AIMS and the Lomé Charter would be to establish an institutional home for implementation efforts. The AU currently has no office or department focused exclusively on its maritime initiatives. The establishment of a well-resourced and politically influential entity to oversee these efforts would greatly improve implementation.'
         },
         {
           tag: 'p',
-          html: 'The ramifications of full implementation of AIMS make tackling these formidable challenges worth the effort. Successful AIMS implementation has the potential to drastically improve maritime security and governance and unlock the potential of Africa’s Blue Economy.'
+          html: 'The ramifications of full implementation of AIMS and the Lomé Charter make tackling these formidable challenges worth the effort. Successful implementation has the potential to drastically reduce maritime crime, improve governance, and unlock the potential of Africa’s blue economy.'
         },
+
         {
           tag: 'links',
           items: [{
-              org: '<sup>14</sup> “African Maritime Action Plan Adopted,” <em>Maritime Executive</em>, 2 February 2014.',
+              org: '<sup>2</sup> “African Maritime Action Plan Adopted,” <em>Maritime Executive</em>, 2 February 2014.',
               url: 'http://www.maritime-executive.com/article/African-Maritime-Action-Plan-Adopted-2014-02-02'
             },
             {
-              org: '<sup>15</sup> “2050 Africa’s Integrated Maritime Strategy,” African Union, 2012, Version 1.0.',
+              org: '<sup>3</sup> “2050 Africa’s Integrated Maritime Strategy,” African Union, 2012, Version 1.0.',
               url: 'http://cggrps.org/wp-content/uploads/2050-AIM-Strategy_EN.pdf'
             },
           ]
@@ -613,43 +517,44 @@ var internationalCooperationData = {
       ] // end of els array
     },
     { // Card 3
-      title: 'Yaoundé Process and the Djibouti Code',
-      menu: 'Yaoundé & Djibouti',
+      title: 'Regional Strategies',
+      menu: 'Regional Strategies',
       metadata: {
         owner: 'Jay Benson',
         description: 'How the zones and regional centers are set up, describe patrols and success.'
       },
       map: {
+        type: 'categorical',
         scale: [],
         classes: 'card-eez-layer',
         translate: [],
         highlights: [],
         tooltip: true,
+        legend: 'Regional Coordination in sub-Saharan Africa',
+        categories: ['Yaoundé Zone A', 'Yaoundé Zone D', 'Yaoundé Zone E', 'Yaoundé Zone F', 'Yaoundé Zone G', 'Djibouti Code of Conduct'],
         tooltipHTML: function(iso) {
           var zone = issueAreaData[issueArea].metadata.countryData[iso];
-
           switch (zone.yaounde) {
             case 1:
-              return "Zone A";
+              return "Yaoundé Zone A";
               break;
             case 2:
-              return "Zone D";
+              return "Yaoundé Zone D";
               break;
             case 3:
-              return "Zone E";
+              return "Yaoundé Zone E";
               break;
             case 4:
-              return "Zone F";
+              return "Yaoundé Zone F";
               break;
             case 5:
-              return "Zone G";
+              return "Yaoundé Zone G";
               break;
-            case 0:
-              if (zone.djibouti == 1) {
-                return "Party to Djibouti Code of Conduct"
-              }
+            case 6:
+              return "Party to Djibouti Code of Conduct";
+              break;
             default:
-              return "Neither a member of the Lome Charter nor the Djibouti Code of Conduct";
+              return null;
           }
 
 
@@ -657,93 +562,18 @@ var internationalCooperationData = {
         load: function(index, file) { // ### *** This only should be for the first card ...
 
           var layer = 'card-' + index + '-layer';
-
           d3.select('.card-eez-layer')
             .classed(layer, true);
+
         },
         switch: function(index) {
 
-          // First highlight yaounde members .country.in
-          var vals = issueAreaData[issueArea].metadata.countryData;
-          // ### Replace this with choropleth() function, once it is built to handle categorical data.
-          var i = 0;
-          for (iso in vals) {
-            var yaounde = vals[iso]['yaounde'] - 1;
-
-            if (yaounde >= 0) {
-              //  console.log(country.ia2c3);
-              d3.selectAll('.country.' + iso)
-                .classed('active', true)
-              //  .transition().delay(i * 10)
-                .style('fill', colorBrew[yaounde][0])
-                .style('stroke', colorBrew[yaounde][1]); // ### what colors??
-              //  .style('stroke', 'white');
-
-              d3.selectAll('.eez.' + iso)
-                .classed('active', true)
-              //  .transition().delay(i * 10)
-                .style('stroke', colorBrew[yaounde][0]); // ### what colors?? Also EEZ opacity is meh ...
-
-              i++;
-
-            }
-
-            var djibouti = vals[iso]['djibouti'];
-
-            if (djibouti == 1) {
-              d3.selectAll('.country.' + iso)
-                .classed('active', true)
-                .style('fill', function () {
-                  return d3.interpolateLab('white', '#fff000')(0.5);
-                });
-            //  console.log(iso);
-            }
-
-
-
-            // Set up dcoc highlights too ...
-            // if (dcoc[iso].djibouti == 1) {
-            //   d3.selectAll('.country.' + iso)
-            //     .classed('active', true)
-            //     .transition().delay(i * 10)
-            //     .style('fill', function() {
-            //       return themeColor(0.5);
-            //     })
-            //     .style('stroke', function() {
-            //       return themeColor(1);
-            //     });
-            //
-            //   d3.selectAll('.eez.' + iso)
-            //     .classed('active', true)
-            //     .transition().delay(i * 10)
-            //     //  .style('fill', function () {return rampColor(0.1);})
-            //     .style('stroke', function() {
-            //       return themeColor(1);
-            //     })
-            //     .style('stroke-width', '2px');
-            //     i++;
-            // }
+          choropleth(index, 1, 'yaounde');
           }
-
-          var yaoundeInland = ['BFA', 'CAF', 'MLI', 'NER', 'TCD','BDI', 'RWA'];
-          for (var j = 0; j < yaoundeInland.length; j++ ) {
-            var iso = yaoundeInland[j];
-            d3.selectAll('.country.' +  iso)
-              .classed('active', true)
-              .style('fill', themeColor(0.3));
-
-            d3.selectAll('.label.' + iso)
-              .classed('active', true)
-              .style('fill', 'black');
-          }
-
-
-
-        }
       },
       els: [{
           tag: 'h1',
-          text: 'Yaoundé Process and Djibouti Code',
+          text: 'Regional Strategies',
         },
         {
           tag: 'caption',
@@ -757,40 +587,85 @@ var internationalCooperationData = {
         //###Insert Graphic: There is a graphic below called information sharing in West Africa I would like to try and use that, but I am not sure if that is possible in the web format. If not we can use that as an image within the card. In that case I think it would be good to have a map zoomed into west/central Africa with two components. First is a shaded map with ECOWAS countries in one color and ECCAS countries in another and corresponding labels. The second would be points which show the centers for the ICC, CRESMAC and CRESMAO. All country lists, labels and GPS coordinates will be in the excel file I will send.
         {
           tag: 'p',
-          html: 'In response to the rising threat of piracy and other forms of maritime crime, states and regional institutions in the Gulf of Guinea (GoG) developed the Yaoundé process, a series of regional arrangements which provide for enhanced cooperation in the area of maritime security.'
+          html: 'African states coordinate to address maritime security challenges on both sides of the continent. The Yaoundé Code of Conduct in the Gulf of Guinea and the Jeddah Amendment to the Djibouti Code of Conduct in the Western Indian Ocean are at different stages of implementation, but they share a fundamental goal: to improve maritime governance.'
+        },
+        {
+          tag: 'h3',
+          html: 'The Yaoundé Code of Conduct'
         },
         {
           tag: 'p',
-          html: 'The central agreement of the Yaoundé process is the Yaoundé Code of Conduct (YCoC). The YCoC was agreed to in 2013 by 25 states in West and Central Africa. The agreement outlines commitments for combating maritime crime, and proposed the creation of the Interregional Coordination Centre (ICC), the institution responsible for overseeing the implementation of the objectives laid out in the YCoC. The subsequent Yaoundé Memorandum of Understanding lays out the organizational structure of the ICC.'
-        },
-        {
-          tag: 'img',
-          src: '../../assets/international-cooperation/information-sharing-in-West-Africa.png', // This should be on the Stable Seas Deck - comments
+          html: 'The Yaoundé process identifies twelve types of maritime crime and provides a structure for enhancing all-around maritime security in the Gulf of Guinea through regional information-sharing, capacity building, and coordination of multinational maritime security operations. By sharing information regarding emerging threats and ensuring that regional maritime security actors have the institutional and logistical arrangements in place for multinational operations, the region can better respond to the transnational nature of maritime crime.'
         },
         {
           tag: 'p',
-          html: 'The ICC coordinates activities for the entire GoG between two regionally based centers, the Regional Center for Maritime Security in Central Africa (CRESMAC) and the Regional Center for Maritime Security in West Africa (CRESMAO). The structure is then further divided into five zones (three in CRESMAO and two in CRESMAC) of three to five states, each with its own Multinational Maritime Coordination Center (MMCC).'
+          html: 'The Interregional Coordination Center coordinates activities for the Gulf of Guinea between two regionally based centers, the Regional Center for Maritime Security in Central Africa (CRESMAC) and the Regional Center for Maritime Security in West Africa (CRESMAO). The structure is then further divided into five zones, each with its own Multinational Maritime Coordination Center (MMCC). The MMCC in Zone D is particularly well-equipped to communicate with other information sharing centers and coordinate at-sea interdictions.'
         },
         {
           tag: 'p',
-          html: 'The Yaoundé process takes a comprehensive approach to maritime security, identifying 12 different forms of maritime crime in the YCoC. The process provides a structure for enhancing all-around maritime security in the GoG through regional information-sharing, capacity building, and coordination of multinational maritime security operations. By improving the sharing of information regarding emerging and ongoing threats and ensuring that regional maritime security actors have the institutional and logistical arrangements in place for multinational operations, the region can better respond to the transnational nature of maritime crime.'
+          html: 'A strength of the process is that it makes use of existing regional institutions such as the Economic Community of West African States (ECOWAS) and the Economic Community of Central African States (ECCAS). By building upon these established institutions, the ICC can leverage existing relationships with individual states and the larger African Union system.'
+        },
+        {
+          tag: 'h3',
+          html: 'The Djibouti Code of Conduct'
         },
         {
           tag: 'p',
-          html: 'The Yaoundé process is still early in its development. Key steps need to be taken to build the capacity of not only state maritime security forces, but also of CRESMAC, CRESMAO, and the MMCCs. That said, the Yaoundé process has several characteristics which may make it a valuable model for the coordination of regional maritime security.'
+          html: 'In East Africa, the Djibouti Code of Conduct developed as a response to the piracy crisis in the mid- to late 2000s. In January 2017, the Jeddah Amendment expanded the scope of maritime crimes addressed by the Djibouti Code of Conduct and incorporated efforts to develop the blue economy.'
         },
         {
           tag: 'p',
-          html: 'The first aspect is its comprehensiveness. The process recognizes the interconnected nature of various forms of maritime crime and puts forward priorities for combating each. A focus on a single, high-visibility issue risks ignoring other crimes such as maritime pollution or illegal, unreported, and unregulated fishing which have significant, long-term effects on the economic and social wellbeing of a region.'
+          html: 'The agreement lays out plans for regional capacity building and information sharing.  It establishes three multinational information exchange centers, based in Sana’a, Yemen, Mombasa, Kenya,  and Dar es Salaam, Tanzania, to lead coordination efforts among northern, central, and southern groupings of signatory states. In addition, the DCoC places a premium on <a class="maritime-enforcement inline" href="./maritime-enforcement#1">maritime domain awareness</a>, and efforts are being made in conjunction with a variety of international partners across the Western Indian Ocean to put in place additional automatic identification and radar systems to provide regional maritime security forces with a clearer picture of their operating environment.'
         },
         {
           tag: 'p',
-          html: 'The process also makes use of existing regional institutions such as the Economic Community of West African States (ECOWAS) and the Economic Community of Central African States (ECCAS). By building upon these established institutions, the ICC can leverage existing relationships with individual states and the larger African Union system, gaining some level of access to their resources and enhancing its sustainability beyond a period of particular insecurity or the decline of an individual maritime threat.'
+          html: 'It is yet to be seen if the DCoC can be effective in addressing the larger scope of the Jeddah Amendment. If it is to meet this new challenge, it will have to overcome several other challenges first.'
         },
         {
           tag: 'p',
-          html: 'Though the Yaoundé process is still young and many of the functions envisioned within it still need to be developed, it may serve as a useful model for regions that have a large number of states to coordinate to refer to in confronting a variety of transnational maritime security threats.'
+          html: 'Most of the difficulties presented by this change of scope are due to the DCoC’s origin as a response to piracy. The urgency of the situation meant that signatory states were eager to cooperate to address the pressing security threat, but there may not be sufficient political will to pivot toward a broader framework for cooperative maritime governance. Due to the urgent nature of its formation, the DCoC is not rooted in existing regional organizations. This means DCoC efforts cannot utilize the leverage the broader resources of such organizations. '
         },
+        // {
+        //   tag: 'p',
+        //   html: 'Across the African continent, regional efforts are being made to cooperate to improve maritime security. The Yaounde Code of Conduct establishes a comprehensive framework to address maritime security, but it has not been fully developed in each participating state. The Jeddah Amendment to the Djibouti Code of Conduct builds on an existing framework to counter a specific maritime threat, but it remains to be seen if it can successfully expand to counter a broader range of threats. '
+        // }
+
+        // {
+        //   tag: 'p',
+        //   html: 'In response to the rising threat of piracy and other forms of maritime crime, states and regional institutions in the Gulf of Guinea (GoG) developed the Yaoundé process, a series of regional arrangements which provide for enhanced cooperation in the area of maritime security.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'The central agreement of the Yaoundé process is the Yaoundé Code of Conduct (YCoC). The YCoC was agreed to in 2013 by 25 states in West and Central Africa. The agreement outlines commitments for combating maritime crime, and proposed the creation of the Interregional Coordination Centre (ICC), the institution responsible for overseeing the implementation of the objectives laid out in the YCoC. The subsequent Yaoundé Memorandum of Understanding lays out the organizational structure of the ICC.'
+        // },
+        // {
+        //   tag: 'img',
+        //   src: '../../assets/international-cooperation/information-sharing-in-West-Africa.png', // This should be on the Stable Seas Deck - comments
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'The ICC coordinates activities for the entire GoG between two regionally based centers, the Regional Center for Maritime Security in Central Africa (CRESMAC) and the Regional Center for Maritime Security in West Africa (CRESMAO). The structure is then further divided into five zones (three in CRESMAO and two in CRESMAC) of three to five states, each with its own Multinational Maritime Coordination Center (MMCC).'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'The Yaoundé process takes a comprehensive approach to maritime security, identifying 12 different forms of maritime crime in the YCoC. The process provides a structure for enhancing all-around maritime security in the GoG through regional information-sharing, capacity building, and coordination of multinational maritime security operations. By improving the sharing of information regarding emerging and ongoing threats and ensuring that regional maritime security actors have the institutional and logistical arrangements in place for multinational operations, the region can better respond to the transnational nature of maritime crime.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'The Yaoundé process is still early in its development. Key steps need to be taken to build the capacity of not only state maritime security forces, but also of CRESMAC, CRESMAO, and the MMCCs. That said, the Yaoundé process has several characteristics which may make it a valuable model for the coordination of regional maritime security.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'The first aspect is its comprehensiveness. The process recognizes the interconnected nature of various forms of maritime crime and puts forward priorities for combating each. A focus on a single, high-visibility issue risks ignoring other crimes such as maritime pollution or illegal, unreported, and unregulated fishing which have significant, long-term effects on the economic and social wellbeing of a region.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'The process also makes use of existing regional institutions such as the Economic Community of West African States (ECOWAS) and the Economic Community of Central African States (ECCAS). By building upon these established institutions, the ICC can leverage existing relationships with individual states and the larger African Union system, gaining some level of access to their resources and enhancing its sustainability beyond a period of particular insecurity or the decline of an individual maritime threat.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Though the Yaoundé process is still young and many of the functions envisioned within it still need to be developed, it may serve as a useful model for regions that have a large number of states to coordinate to refer to in confronting a variety of transnational maritime security threats.'
+        // },
         //###Insert video, quote, and image
       ] // end of els array
     },
@@ -802,13 +677,20 @@ var internationalCooperationData = {
         description: 'Highlight maritime disputes.'
       },
       map: {
+        type: 'boolean',
         scale: [],
         classes: 'card-eez-layer',
         path: '../../data/international-cooperation/maritime-border-disputes.csv',
         translate: [],
-        tooltip: false,
+        tooltip: true,
+        legend: 'Countries with EEZ disputes',
         tooltipHTML: function(iso) {
-
+          var val = issueAreaData[issueArea].metadata.countryData[iso]['disputes-with'];
+          if (val != 0) {
+            return "Ongoing disputes with " + val;
+          } else {
+            return "No ongoing disputes."
+          }
         },
         load: function(index, csv) { // ### *** This only should be for the first card ...
           // Class EEZ with card-0-layer to enable switch() method
@@ -828,10 +710,10 @@ var internationalCooperationData = {
 
             disputes.selectAll('rect')
               .data(rows).enter()
-              .append('a')
-                .attr('href', function (d, i) {
-                  return '#dispute-' + (i + 1);
-                })
+              // .append('a')
+              //   .attr('href', function (d, i) {
+              //     return '#dispute-' + (i + 1);
+              //   })
               .append('rect')
               .attr('x', function(d) {
                 return projection([d.lon, d.lat])[0] - 16;
@@ -841,10 +723,39 @@ var internationalCooperationData = {
               })
               .attr('width', '30px')
               .attr('height', '30px')
-              .style('fill', function(d, i) {
-                return d3.interpolateLab('white', rampColor(i / (rows.length)))(0.8);
-              })
-              .classed('maritime-dispute', true);
+              .style('fill', function (d, i) {
+                return colorBrew[((i + 1) * 2) - 1];
+                })
+              .classed('maritime-dispute', true)
+              .on('click', function (d, i) {
+                var id = "#dispute-" + (i + 1);
+                console.log(id);
+                var dist = $(id).offset().top;
+                $(window).scrollTop(dist - 80);
+
+                var header = d3.select(id);
+
+
+
+                  header.transition()
+                    .duration(800)
+                  //  .delay(400)
+                    .style('background-color', function () {
+                      return colorBrew[(i * 2)];
+
+                    });
+
+                  header.transition()
+                    .duration(500)
+                    .delay(800)
+                    .style('background-color', function () {
+                      return colorBrew[((i + 1) * 2) - 1];
+
+                    });
+                //  .style('opacity', 1);
+            //    console.log();
+
+              });
 
 
             disputes.selectAll('text')
@@ -869,10 +780,18 @@ var internationalCooperationData = {
                 return i + 1;
               });
 
+
+            rows.forEach(function (val, i) {
+              d3.select('#dispute-' + (i + 1))
+                .style('background-color', colorBrew[((i + 1) * 2) - 1]);
+              console.log(i, colorBrew[(i + 1) / 2]);
+            })
+
           });
 
           d3.select('.card-eez-layer')
             .classed(layer, true);
+
 
         },
         switch: function(index) {
@@ -881,21 +800,24 @@ var internationalCooperationData = {
           // countries.forEach(function(country, i) {
 
           // })
+          choropleth(index,i,'disputes');
+      //    var disputes = issueAreaData[issueArea].metadata.countryData;
 
-          var disputes = issueAreaData[issueArea].metadata.countryData;
-
-          for (iso in disputes) {
-            console.log(disputes[iso]);
-            if (disputes[iso].disputes != 0) {
-          //    console.log('i', iso);
-
-              d3.selectAll('.country.' + iso)
-                .classed('active', true)
-            //    .transition().delay(i * 10)
-                .style('fill', themeColor(0.5))
-                .style('stroke', themeColor(1));
-            }
-          }
+        //   for (iso in disputes) {
+        // //    console.log(disputes[iso]);
+        //     var val = eval(disputes[iso].disputes.toLowerCase());
+        //
+        //   //  console.log(iso, eval(val.toLowerCase()));
+        //     if (val) {
+        //   //    console.log('i', iso);
+        //
+        //       d3.selectAll('.country.' + iso)
+        //         .classed('active', true)
+        //     //    .transition().delay(i * 10)
+        //         .style('fill', themeColor(0.5))
+        //         .style('stroke', themeColor(1));
+        //     }
+        //   }
       ///    console.log(disputes);
 
         }
@@ -915,119 +837,183 @@ var internationalCooperationData = {
         // },
         {
           tag: 'p',
-          html: 'International legal developments including UNCLOS have reduced the potential for conflict by establishing common definitions and guidelines pertaining to maritime claims and resources. This work has provided states with many non-violent methods for overcoming contested claims and most African states have entered formal agreements with their neighbors that establish mutually recognized maritime borders.'
-        },
-        {
-          tag: 'img',
-          src: '../../assets/international-cooperation/Jubilee_Oil_Field_of_the_Ghana_National_Petroleum_Corporation_GNPC_and_National_Petroleum_Authority.png', // This should be on the Stable Seas Deck - comments
-          alt: 'The Jubilee Oil field straddles the contested boundary between Cote d\'Ivoire and Ghana.',
-          caption: 'The Jubilee Oil field straddles the contested boundary between Cote d\'Ivoire and Ghana.'
+          html: 'UNCLOS defines the territorial sea as extending 12 nautical miles from shore and the exclusive economic zones (EEZs) as extending 200 nautical miles beyond the baseline. Despite the appearance of clarity, there are a number of maritime boundary disputes in sub-Saharan Africa, many of which are not currently being adjudicated in the legal bodies established to resolve such disputes.'
         },
 
         {
-          tag: 'p',
-          html: 'The multifaceted drivers of the region\'s ongoing disputes are typified by the disagreement over the maritime boundary between Ghana and Côte d’Ivoire.<sup>3</sup> The border between these former British and French colonies was never fully demarcated, laying the groundwork for the dispute, but what had previously been a low-profile issue took on new significance after the discovery of the massive Jubilee <a class="blue-economy inline" href="../../blue-economy#6">oil and gas field</a> which straddles the contested border. Both sides have since granted competing operating licenses to international oil companies.'
+          tag: 'img',
+          src: '../../assets/international-cooperation/maritime_zones_eez.png', // ### need image path and in assets/international-cooperation/
+          alt: 'The legal definition definition of \'exclusive economic zone\' was established under UNCLOS.',
+          caption: 'The legal definition definition of \'exclusive economic zone\' was established under UNCLOS.'
+        },
+        {
+          tag: 'h3',
+          html: '<div id="dispute-1" class="heading">1 Gulf of Aden Disputes</div>'
         },
         {
           tag: 'p',
-          html: 'These disputes have not become militarized, but they pose a problem for governance and security in African waters in two ways. First, unresolved maritime boundaries hamper regional security by encouraging states to look at maritime security from the perspective of national defense as opposed to that of <a class="maritime-enforcement inline" href="../../maritime-enforcement#3">law enforcement</a>, which is better suited to the security threats faced in African waters. In addition, non-demarcated maritime boundaries mean states cannot fully develop their <a class="blue-economy inline" href="../../blue-economy">Blue Economy</a>, including industries such as <a class="fisheries inline" href="../../fisheries">fisheries</a>, <a class="blue-economy inline" href="../../blue-economy#6">hydrocarbon</a>, <a class="blue-economy inline" href="../../blue-economy#2">tourism</a>, and <a class="blue-economy inline" href="../../blue-economy#3">shipping</a>.'
+          html: 'Somalia claimed an Exclusive Economic Zone in 2014, an act which almost immediately sparked a protest from Yemen over the islands of Socotra, Sambad, and Ad Al Kuri. In 2017, Djibouti also issued a formal protest regarding Somalia’s EEZ claim. Djibouti challenges the coordinates used as baselines from which the Somali EEZ is defined. Both claims are now pending with the United Nations Division for Ocean Affairs and the Law of the Sea.'
+        },
+        {
+          tag: 'h3',
+          html: '<div id="dispute-2" class="heading">2 DRC and Angola</div>'
         },
         {
           tag: 'p',
-          html: 'The region primarily uses two models for maritime dispute resolution. The first relies on international legal institutions to resolve disputes. This is the model used in the aforementioned case of Ghana and Côte d’Ivoire, which is at the international Tribunal on the Law of the Sea, as well as the case of Kenya and Somalia, whose dispute is on trial at the International Court of Justice.<sup>4</sup> Alternatively, some states have chosen to shelve issues of sovereignty and establish frameworks and institutions for joint development and governance of maritime industries in the disputed areas. As both the <a class="international-cooperation inline internal-ref" data-link="6">African Union</a> and <a class="international-cooperation inline internal-ref" data-link="3">sub-regional organizations</a> turn their attention to governance of the maritime space, there may be room for both to further develop frameworks for maritime dispute resolution which facilitate cooperative economic development and security.'
+          html: 'Some disputes are amplified by the discovery of offshore oil and gas resources. Angola and DRC are engaged in a maritime boundary dispute involving oil blocks. Oil was first struck offshore Angola in 1962 and major discoveries of new blocks have continued. The blocks are controversial because the angle at which they are aligned restricts DRC’s access to the sea. Kinshasa argues that the generally accepted boundary is not the result of any international agreement, but rather an arbitrary colonial legacy. Both sides have submitted requests for international arbitration to the UN.'
         },
         {
-          tag: 'h2',
-          html: function () {return '<a id="dispute-1" class="dispute-header">Dispute 1</a>'}
-        },
-        {
-          tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
-        },
-        {
-          tag: 'h2',
-          html: function () {return '<a class="dispute-header" id="dispute-2">Dispute 2</a>'}
+          tag: 'h3',
+          html: '<div id="dispute-3" class="heading">3 Comoros and Mayotte</div>'
         },
         {
           tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
-        },
-        {
-          tag: 'h2',
-          html: function () {return '<a class="dispute-header" id="dispute-3">Dispute 3</a>'}
+          html: 'There are multiple disputes in the crowded Mozambique Channel. Comoros and France are locked in a nearly four-decade-old dispute over the island of Mayotte. Despite UN resolutions supporting the legitimacy of Comoros’ claim to Mayotte, France continues to govern the island. The island became the 101st department of France on 31 March 2011, following a contentious referendum in which 95% of Mahorais chose to break from Comoros, but the Comorian constitution continues to affirm Mayotte as part of Comoros.'
         },
         {
           tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+          html: 'The tiny Glorioso Islands, totalling five square kilometers, have long been contested by different states. In 1895, they became part of the same French colony as Mayotte and France continues to claim the islands as part of French overseas territory. Like Mayotte, this claim is contested by Comoros. Madagascar has also claimed sovereignty over the Glorioso since 1972. Even Seychelles claimed the Glorioso before the France-Seychelles Maritime Boundary Agreement of 2001. At stake is an Exclusive Economic Zone of 48,350 square kilometers.'
         },
         {
-          tag: 'h2',
-          html: function () {return '<a class="dispute-header" id="dispute-4">Dispute 4</a>'}
-        },
-        {
-          tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
-        },
-        {
-          tag: 'h2',
-          html: function () {return '<a class="dispute-header" id="dispute-5">Dispute 5</a>'}
+          tag: 'h3',
+          html: '<div id="dispute-4" class="heading">4 Eritrea and Djibouti</div>'
         },
         {
           tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+          html: 'The disputed zone between Eritrea and Djibouti consists of a hill, called Ras Doumeira, and the island of Doumeira. The land is essentially deserted, but it lies strategically adjacent to the mouth of the Red Sea and some of the world’s busiest shipping lanes. The last guidance regarding demarcation of the border dates from the colonial period between France and Italy. In recent decades, Eritrea has clashed repeatedly with its neighbors over border disputes, including a conflict with Yemen over the Hanish Islands. The conflict was resolved by the Permanent Court of Arbitration in The Hague with most of the islands determined to be Yemeni.'
         },
         {
-          tag: 'h2',
-          html: function () {return '<a class="dispute-header" id="dispute-6">Dispute 6</a>'}
-        },
-        {
-          tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
-        },
-        {
-          tag: 'h2',
-          html: function () {return '<a class="dispute-header" id="dispute-7">Dispute 7</a>'}
+          tag: 'h3',
+          html: '<div id="dispute-5" class="heading">5 Equatorial Guinea and Gabon</div>'
         },
         {
           tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+          html: 'The dispute between Equatorial Guinea and Gabon has existed since 1972. It concerns the islands of Mbanie, Cocotiers, and Congas in Corisco Bay. They are only sparsely inhabited but provide access to extensive oil fields with estimated reserves of several hundred thousand barrels per well. In 2004, both states agreed that a UN mediator should settle their dispute. Until a resolution is reached, full exploration of the bay’s oil potential is on hold.'
         },
         {
-          tag: 'h2',
-          html: function () {return '<a class="dispute-header" id="dispute-8">Dispute 8</a>'}
-        },
-        {
-          tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
-        },
-        {
-          tag: 'h2',
-          html: function () {return '<a class="dispute-header" id="dispute-9">Dispute 9</a>'}
+          tag: 'h3',
+          html: '<div id="dispute-6" class="heading">6 Kenya and Somalia</div>'
         },
         {
           tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+          html: 'In 2012, Kenya leased seven offshore oil blocks that were located in an area of their Exclusive Economic Zone contested by Somalia. Kenya wants a maritime boundary based on a straight line emanating from the land boundary between the states. Somalia wants a boundary based on the median, as stated in UNCLOS Article 15. The two parties submitted their dispute to the International Court of Justice (ICJ) in 2014. '
         },
-        {
-          tag: 'h2',
-          html: function () {return '<a class="dispute-header" id="dispute-10">Dispute 10</a>'}
-        },
-        {
-          tag: 'p',
-          html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
-        },
-        {
-          tag: 'links',
-          items: [{
-              org: '<sup>3</sup> Barthélemy Blédé and André Diouf, “The First Verdict in the Ghana-Côte d’Ivoire Maritime Border Dispute Will be Delivered Tomorrow,” Institute for Security Studies, 24 April 2015,',
-              url: 'https://issafrica.org/iss-today/gulf-of-guinea-who-will-win-the-oil-battle'
-            },
-            {
-              org: '<sup>4</sup> David Mwere, “Kenya-Somalia Maritime Boundary Dispute Proceeds to Full Trail, ICJ Rules,” The Star, 2 February 2017,',
-              url: 'https://www.the-star.co.ke/news/2017/02/02/kenya-somalia-maritime-boundary-dispute-proceeds-to-full-trial-icj_c1499658'
-            },
-          ]
-        },
+
+        // {
+        //   tag: 'p',
+        //   html: 'International legal developments including UNCLOS have reduced the potential for conflict by establishing common definitions and guidelines pertaining to maritime claims and resources. This work has provided states with many non-violent methods for overcoming contested claims and most African states have entered formal agreements with their neighbors that establish mutually recognized maritime borders.'
+        // },
+        // {
+        //   tag: 'img',
+        //   src: '../../assets/international-cooperation/Jubilee_Oil_Field_of_the_Ghana_National_Petroleum_Corporation_GNPC_and_National_Petroleum_Authority.png', // This should be on the Stable Seas Deck - comments
+        //   alt: 'The Jubilee Oil field straddles the contested boundary between Cote d\'Ivoire and Ghana.',
+        //   caption: 'The Jubilee Oil field straddles the contested boundary between Cote d\'Ivoire and Ghana.'
+        // },
+        //
+        // {
+        //   tag: 'p',
+        //   html: 'The multifaceted drivers of the region\'s ongoing disputes are typified by the disagreement over the maritime boundary between Ghana and Côte d’Ivoire.<sup>3</sup> The border between these former British and French colonies was never fully demarcated, laying the groundwork for the dispute, but what had previously been a low-profile issue took on new significance after the discovery of the massive Jubilee <a class="blue-economy inline" href="../../blue-economy#6">oil and gas field</a> which straddles the contested border. Both sides have since granted competing operating licenses to international oil companies.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'These disputes have not become militarized, but they pose a problem for governance and security in African waters in two ways. First, unresolved maritime boundaries hamper regional security by encouraging states to look at maritime security from the perspective of national defense as opposed to that of <a class="maritime-enforcement inline" href="../../maritime-enforcement#3">law enforcement</a>, which is better suited to the security threats faced in African waters. In addition, non-demarcated maritime boundaries mean states cannot fully develop their <a class="blue-economy inline" href="../../blue-economy">Blue Economy</a>, including industries such as <a class="fisheries inline" href="../../fisheries">fisheries</a>, <a class="blue-economy inline" href="../../blue-economy#6">hydrocarbon</a>, <a class="blue-economy inline" href="../../blue-economy#2">tourism</a>, and <a class="blue-economy inline" href="../../blue-economy#3">shipping</a>.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'The region primarily uses two models for maritime dispute resolution. The first relies on international legal institutions to resolve disputes. This is the model used in the aforementioned case of Ghana and Côte d’Ivoire, which is at the international Tribunal on the Law of the Sea, as well as the case of Kenya and Somalia, whose dispute is on trial at the International Court of Justice.<sup>4</sup> Alternatively, some states have chosen to shelve issues of sovereignty and establish frameworks and institutions for joint development and governance of maritime industries in the disputed areas. As both the <a class="international-cooperation inline internal-ref" data-link="6">African Union</a> and <a class="international-cooperation inline internal-ref" data-link="3">sub-regional organizations</a> turn their attention to governance of the maritime space, there may be room for both to further develop frameworks for maritime dispute resolution which facilitate cooperative economic development and security.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a id="dispute-1" class="dispute-header">Dispute 1</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a class="dispute-header" id="dispute-2">Dispute 2</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a class="dispute-header" id="dispute-3">Dispute 3</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a class="dispute-header" id="dispute-4">Dispute 4</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a class="dispute-header" id="dispute-5">Dispute 5</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a class="dispute-header" id="dispute-6">Dispute 6</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a class="dispute-header" id="dispute-7">Dispute 7</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a class="dispute-header" id="dispute-8">Dispute 8</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a class="dispute-header" id="dispute-9">Dispute 9</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'h2',
+        //   html: function () {return '<a class="dispute-header" id="dispute-10">Dispute 10</a>'}
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'
+        // },
+        // {
+        //   tag: 'links',
+        //   items: [{
+        //       org: '<sup>3</sup> Barthélemy Blédé and André Diouf, “The First Verdict in the Ghana-Côte d’Ivoire Maritime Border Dispute Will be Delivered Tomorrow,” Institute for Security Studies, 24 April 2015,',
+        //       url: 'https://issafrica.org/iss-today/gulf-of-guinea-who-will-win-the-oil-battle'
+        //     },
+        //     {
+        //       org: '<sup>4</sup> David Mwere, “Kenya-Somalia Maritime Boundary Dispute Proceeds to Full Trail, ICJ Rules,” The Star, 2 February 2017,',
+        //       url: 'https://www.the-star.co.ke/news/2017/02/02/kenya-somalia-maritime-boundary-dispute-proceeds-to-full-trial-icj_c1499658'
+        //     },
+        //   ]
+        // },
         //###Insert image and Video for card
       ] // end of els array
     },
@@ -1168,7 +1154,6 @@ var internationalCooperationData = {
     //     }
     //   ] // end of els array
     // },
-
     // { // Card 5
     //   title: 'East Africa',
     //   menu: 'East Africa',
@@ -1424,124 +1409,82 @@ var internationalCooperationData = {
     //     //###Insert Map and Graphics
     //   ] // end of els array
     // },
-
-    { // Card 7
-      title: 'Methodology',
-      menu: 'Methodology',
+    { // Card 5
+      title: 'Data and Methods',
+      menu: 'Data and Methods',
       metadata: {
         owner: 'Curtis Bell',
         description: 'Card will provide basic methodology info.'
       },
       map: {
+        type: 'continuous',
         scale: [],
-        classes: '',
+        classes: 'card-eez-layer',
         translate: [],
         highlights: [],
         tooltip: true,
+        legend: 'International Cooperation Score',
         tooltipHTML: function(iso) {
 
-          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso].index;
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['international-cooperation-index'];
           tooltipVal = Math.round((tooltipVal * 100));
           updatePointer(tooltipVal);
           return "International Cooperation:<br />" + tooltipVal + " / 100";
 
         },
         load: function(index, csv) { // ### *** This only should be for the first card ...
-          // Load flow map layer
+          // Class EEZ with card-0-layer to enable switch() method
           var layer = 'card-' + index + '-layer';
-          // Load topoJSON of flow map
           d3.select('.card-eez-layer')
             .classed(layer, true);
-          // Class with layer
         },
         switch: function(index) {
-          // Simply show target layer
-          choropleth(index, 1, 'index');
-
+          // Choropleth of scores
+          choropleth(index, 1, 'international-cooperation-index');
         }
       },
-      els: [{
+      els: [
+        {
           tag: 'h1',
-          text: 'Methodology',
+          text: 'Data and Methods',
+        },
+        {
+          tag: 'caption',
+          text: 'How we created the International Cooperation score'
+        },
+        {
+          tag: 'p',
+          html: 'International cooperation is measured with three equally weighted components: participation in relevant international agreements, regional security strategies, and maritime boundary violations or disputes.'
+        },
+        {
+          tag: 'h3',
+          html: 'Global Agreements'
+        },
+        {
+          tag: 'p',
+          html: 'The first component reflects the signing and ratification of seven global maritime legal agreements: the United Nations Convention on the Law of the Sea (UNCLOS), UNCLOS Part XI, the UN Fish Stocks Agreement, the Convention for the Suppression of Unlawful Acts against Safety of Maritime Navigation (SUA), the UN Food and Agriculture Organization Port State Measures Agreement (PSMA), the UN Convention against Transnational Organized Crime (CTOT), and the UN Convention against Illicit Traffic in Narcotic Drugs and Psychotropic Substances. States that have signed and ratified all of these agreements receive the maximum value for this part of the international cooperation score. States that have signed but are not party to an agreement receive one third of the score for that agreement.'
+        },
+        {
+          tag: 'h3',
+          html: 'Regional Strategies'
+        },
+        {
+          tag: 'p',
+          html: 'Regional security strategies are measured as the mean of two inputs: membership and material commitment. States receive the maximum membership score if they are party to all relevant maritime security agreements in their subregion (i.e. the Yaoundé Code of Conduct, Djibouti Code of Conduct, and SADC maritime security strategy). The material commitment component gauges the tangible outcomes of the security strategies, with states involved in better-developed strategies earning higher scores than those participating in strategies that have yet to result in significant material commitments.'
+        },
+        {
+          tag: 'h3',
+          html: 'Boundary Violations and Disputes'
+        },
+        {
+          tag: 'p',
+          html: 'The final component equally weights excessive territorial claims and maritime boundary disputes. Violations are defined as territorial claims that extend beyond the twelve nautical miles granted by UNCLOS. Disputes are competing claims over exclusive economic zones (EEZs) that have yet to be resolved by the International Tribunal for the Law of the Sea or by formal bilateral or multilateral agreements. Countries receive the maximum score when they neither make excessive territorial claims nor have unresolved disputes with maritime neighbors.'
+        },
+        {
+          tag: 'p',
+          html: 'More details about all of these scores are available on our data page.'
         }
-
       ] // end of els array
     }
-    // { // Card 8
-    //   title: 'A Global Effort',
-    //   menu: 'A Global Effort',
-    //   metadata: {
-    //     owner: 'Curtis Bell',
-    //     description: 'A Global Effort'
-    //   },
-    //   map: {
-    //     scale: [],
-    //     classes: 'card-8-layer',
-    //     translate: [],
-    //     highlights: null,
-    //     load: function(index, file) { // ### *** This only should be for the first card ...
-    //       // Color EEZ according to master Stable Seas index
-    //       var layer = 'card-' + index + '-layer';
-    //
-    //       d3.select('.card-eez-layer')
-    //         .classed(layer, true);
-    //     },
-    //     switch: function(index) {
-    //
-    //       choropleth(index, 1, 'index');
-    //
-    //
-    //     }
-    //   },
-    //   els: [{
-    //       tag: 'h1',
-    //       text: 'A Global Effort'
-    //     },
-    //     {
-    //       tag: 'caption',
-    //       text: 'How global partners complement Africa\'s maritime security strategies'
-    //     },
-    //     {
-    //       tag: 'legend',
-    //       text: 'Map Legend',
-    //       legendContent: '<em>Highlighted countries are party to the Convention for the Suppression of Unlawful Acts against the Safety of Maritime Navigation.</em>'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'African maritime governance is of material interest to stakeholders well beyond the African continent. International institutions, non-African states, and private stakeholders are important participants in the global effort to improve sub-Saharan maritime security.'
-    //     },
-    //     {
-    //       tag: 'img',
-    //       src: '../../assets/international-cooperation/EUCAP-NESTOR-Djibouti-joint-training.jpg', // This should be on the Stable Seas Deck - comments
-    //       alt: 'Command exercise, Crew of EU Naval Force frigate FGS Augsburg, police officers with EUCAP NESTOR and Djibouti Navy. Photo credit: European Union Naval Force',
-    //       caption: 'Command exercise, Crew of EU Naval Force frigate FGS Augsburg, police officers with EUCAP NESTOR and Djibouti Navy. Photo credit: European Union Naval Force'
-    //     },
-    //
-    //     {
-    //       tag: 'p',
-    //       html: 'UN organizations play a very valuable role, primarily through the <a href="https://www.unodc.org/unodc/en/piracy/index_new.html" target="_blank">UN Office on Drugs and Crime (UNODC)</a> and the <a href="http://www.imo.org/en/Pages/Default.aspx" target="_blank">International Maritime Organization (IMO)</a>. The UNODC seeks to build national capacities for maritime law enforcement through the Global Maritime Crime Program, which, for example, is working with the Federal Government of Somalia to build the nascent state justice system. IMO does a variety of work, much of it focused on maritime law and the building of regional maritime institutions.'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'Regional bodies also play an important role. The EU, for example, has three different programs in the realm of African maritime governance and security. The Program to Promote Maritime Security is EU-funded but implemented by regional institutions. It seeks to counteract piracy and crime in the Western Indian Ocean by building local maritime security capacity and undermining the root causes of these activities. Similarly, EUCAP Somalia builds capacity through providing training in relevant skillsets. Additionally, EU NAVFOR has deployed European naval vessels to protect vital shipping routes threatened by the rise of piracy off the Somali coast.'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'More purpose-specific coalitions also contribute. Maritime Domain Awareness for Trade—Gulf of Guinea, an initiative of the French and British navies, serves as a maritime information-sharing center in the Gulf of Guinea, helping to mitigate the general lack of maritime domain awareness in African waters. The Combined Maritime Forces is another multilateral initiative comprised of 31 states which patrols the Western Indian Ocean on counter-piracy and counter-terrorism missions.'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'Finally, individual states can also partner with local actors to improve maritime security. U.S. Naval Forces Africa provides training to African maritime security forces and puts on <a class="maritime-enforcement inline" href="../../maritime-enforcement#4">annual naval exercises</a> aimed at improving regional interoperability. Similarly, the French ASECMAR project supports reform of maritime security institutions in the Gulf of Guinea.'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'This is by no means an exhaustive list. Across the globe, individual states, civil society workers, multilateral institutions, business associations, academics, security professionals, and a host of others are collaborating to help address the complex security and governance challenges faced in African waters.'
-    //     },
-    //     //###Insert images, videos, and quotes
-    //   ]
-    // },
-
-    //   ]
-    // }
   ] // End of cards array
 };

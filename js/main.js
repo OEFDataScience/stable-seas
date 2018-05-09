@@ -1,25 +1,27 @@
 // STABLE Seas
-// ONE EARTH FUTUREee
-// v0.0.6
+// ONE EARTH FUTURE
+// v1.0.0
 
 // Define global variables
 // Issue Area
 var iaIndex = issueAreaData[issueArea].metadata.index;
-
+var filtered;
 // Card
 var cIndex;
 // Included Countries
 var includedCountries = ['AGO', 'BEN', 'CMR', 'CPV', 'COM', 'COG', 'DJI', 'COD', 'GNQ', 'GAB', 'GMB', 'GHA', 'GIN', 'GNB', 'CIV', 'KEN', 'LBR', 'MDG', 'MUS', 'MOZ', 'NAM', 'NGA', 'STP', 'SEN', 'SYC', 'SLE', 'SOM', 'ZAF', 'TZA', 'TGO'];
 
 // Color variables
-// var colorBrew = d3.scaleOrdinal(d3.schemeCategory20);// I don't think we need this any more...
-var colorBrew = [
-  ['#a6cee3', '#1f78b4'],
-  ['#b2df8a', '#33a02c'],
-  ['#fb9a99', '#e31a1c'],
-  ['#fdbf6f', '#ff7f00'],
-  ['#cab2d6', '#6a3d9a']
-];
+var colorBrew = d3.schemeCategory20; // I don't think we need this any more...
+// var colorBrew = [
+//   ['#a6cee3', '#1f78b4'],
+//   ['#b2df8a', '#33a02c'],
+//   ['#fb9a99', '#e31a1c'],
+//   ['#fdbf6f', '#ff7f00'],
+//   ['#cab2d6', '#6a3d9a']
+// ];
+
+
 
 // Color vars and functions
 var iaColorSelection = issueAreaData[issueArea].metadata.color;
@@ -100,40 +102,167 @@ var mapg = d3.select('.map-g');
 
 // Add color gradient rectangle on top of map-g...
 //console.log((h - 100).toString());
-var translateG = 'translate(20, ' + (h - 80).toString() + ')';
 
-// console.log(translateG);
-var legendG = d3.select('#map-svg')
-  .append('g')
-  .classed('legend-g ', true)
-  .attr('width', 300)
-  .attr('height', 50)
-  .attr('transform', translateG)
+function buildLegendContinuous() {
 
-legendG.append('rect')
-  .attr('width', 300)
-  .attr('height', 10)
-  .style('fill', 'url(#linear-gradient)');
+  var translateG = 'translate(20, ' + (h - 80).toString() + ')';
 
-legendG.append('text')
-  .text('Worse')
-  .attr('font-size', 10)
-  .attr('y', 25);
+  var legendG = d3.select('#map-svg')
+    .append('g')
+    .classed('legend continuous invisible', true)
+    .attr('width', 300)
+    .attr('height', 50)
+    .attr('transform', translateG)
 
-legendG.append('text')
-  .text('Better')
-  .attr('font-size', 10)
-  .attr('y', 25)
-  .attr('x', '270');
+  legendG.append('rect')
+    .attr('width', 300)
+    .attr('height', 10)
+    .style('fill', 'url(#linear-gradient)');
 
-legendG.append('polygon')
-  .classed('legend-pointer hidden', true)
-  .attr('points', '0 0, 16 0, 8 15')
-  .attr('fill', 'black')
-  .attr('transform', 'translate(0, -15)');
-//.attr('stroke-width',5);
+  legendG.append('text')
+    .text('Worse')
+    .attr('font-size', 10)
+    .attr('y', 25);
+
+  legendG.append('text')
+    .text('Better')
+    .attr('font-size', 10)
+    .attr('y', 25)
+    .attr('x', '270');
+
+  legendG.append('text')
+    .classed('legend-title', true)
+    .attr('font-size', 20)
+    .attr('y', -25)
+    .attr('x', 0)
+    .text('HAIIII');
+
+  legendG.append('polygon')
+    .classed('legend-pointer hidden', true)
+    .attr('points', '0 0, 16 0, 8 15')
+    .attr('fill', 'black')
+    .attr('transform', 'translate(0, -15)');
+
+}
+
+buildLegendContinuous();
+
+function buildLegendCategorical() {
+
+  var numCats = 10;
+
+  var translateG = 'translate(' + margins.bottom + ', ' + (h - (40 * numCats)) + ')';
+
+  var legendG = d3.select('#map-svg')
+    .append('g')
+    .classed('legend categorical ', true)
+    .attr('transform', translateG);
+
+  for (var c = 0; c < numCats; c++) {
+
+    var g = legendG.append('g')
+      .classed('legend-cat invisible cat-' + (numCats - c - 1), true);
+    //.attr('transform', 'translate(0,0)')
+
+    g.append('rect')
+      .classed('cat-' + (numCats - c - 1), true)
+      .attr('width', 20)
+      .attr('height', 20)
+      .attr('transform', 'translate(0,' + (c * 30) + ')')
+      .attr('fill', colorBrew[(2 * (numCats - c - 1))])
+      .style('opacity', 0.3);
+
+    g.append('rect')
+      .classed('cat-' + (numCats - c - 1), true)
+      .attr('width', 10)
+      .attr('height', 10)
+      .attr('transform', 'translate(5,' + (c * 30 + 5) + ')')
+      .attr('fill', d3.interpolateLab('white', colorBrew[(2 * (numCats - c - 1))])(0.5));
+    //      .style('stroke', 'white');
 
 
+    g.append('text')
+      .classed('cat-' + (numCats - c - 1), true)
+      .attr('font-size', 18)
+      .attr('transform', 'translate(37,' + (c * 30 + 15) + ')')
+      .text(null);
+  }
+
+  legendG.append('text')
+    .classed('legend-categorical-title', true)
+    .attr('transform', 'translate(0,320)')
+    .attr('font-size', 24)
+    .text(null);
+
+  // legendG.append('rect')
+  //   .attr('width', 300)
+  //   .attr('height', 10)
+  //   .style('fill', 'url(#linear-gradient)');
+  //
+  // legendG.append('text')
+  //   .text('Worse')
+  //   .attr('font-size', 10)
+  //   .attr('y', 25);
+  //
+  // legendG.append('text')
+  //   .text('Better')
+  //   .attr('font-size', 10)
+  //   .attr('y', 25)
+  //   .attr('x', '270');
+  //
+  // legendG.append('text')
+  //   .classed('legend-title', true)
+  //   .attr('font-size', 20)
+  //   .attr('y', -25)
+  //   .attr('x', 0)
+  //   .text('HAIIII');
+  //
+  // legendG.append('polygon')
+  //   .classed('legend-pointer hidden', true)
+  //   .attr('points', '0 0, 16 0, 8 15')
+  //   .attr('fill', 'black')
+  //   .attr('transform', 'translate(0, -15)');
+}
+
+buildLegendCategorical();
+
+function buildLegendBoolean() {
+  var translateG = 'translate(20, ' + (h - 80).toString() + ')';
+
+  var legendG = d3.select('#map-svg')
+    .append('g')
+    .classed('legend boolean invisible ', true)
+    .attr('transform', translateG);
+
+
+  var g = legendG.append('g')
+    .classed('legend-bool ', true);
+  //.attr('transform', 'translate(0,0)')
+
+  g.append('rect')
+    .classed('bool', true)
+    .attr('width', 50)
+    .attr('height', 50)
+    .attr('transform', 'translate(0,-50)')
+    .attr('fill', themeColor(1))
+    .style('opacity', 0.3);
+
+  g.append('rect')
+    .classed('bool', true)
+    .attr('width', 20)
+    .attr('height', 20)
+    .attr('transform', 'translate(15,-35)')
+    .attr('fill', themeColor(0.5));
+
+  legendG.append('text')
+    .classed('legend-boolean-title', true)
+    .attr('transform', 'translate(70,0)')
+    .attr('font-size', 24)
+    .text(null);
+
+}
+
+buildLegendBoolean();
 
 // Set up the tooltip:
 var tooltip = d3.select('body').append('div')
@@ -373,8 +502,9 @@ function loadIA(data, card) { // where data = data.js format ... so it's an obje
 
       var iaLink = iaMainNav.append('a')
         .attr('href', function() {
-          return '../issue-areas/' + iaPath;
+          return '../../issue-areas/' + iaPath;
         });
+    //    .attr('target', '_blank');
 
       var iaDiv = iaLink.append('div')
         .attr('id', function() {
@@ -394,11 +524,7 @@ function loadIA(data, card) { // where data = data.js format ... so it's an obje
 
     var iaBtn = d3.select('#ia-' + issueArea);
 
-    iaBtn.style('border-bottom', function() {
-        return "10px solid black";
-      })
-      .style('margin-bottom', '-10px')
-      .style('height', '60px');
+    iaBtn.classed('active-page', true);
 
     // Pull target card index from URL anchor:
     var hash = window.location.hash;
@@ -475,7 +601,7 @@ function loadIA(data, card) { // where data = data.js format ... so it's an obje
 
       $('#ia-maritimeMixedMigration')
         .parent()
-        .attr('href', '../issue-areas/maritime-mixed-migration');
+        .attr('href', '../../issue-areas/maritime-mixed-migration');
 
       buildModals();
 
@@ -563,6 +689,9 @@ function buildEl(obj, container, cardIndex, elIndex) { // Function to build elem
       break;
     case 'd3':
       break;
+    case 'svg':
+      buildSVG(obj, container, cardIndex, elIndex);
+      break;
     default:
       console.log('One of the els objects did not match our switch statement in the buildEl() function.')
   }
@@ -597,25 +726,45 @@ function buildLinks(obj, container, cardIndex, elIndex) {
 
   var links = obj.items;
   links.forEach(function(link) {
-    var a = linksDiv.append('a')
-      .attr('href', link.url)
-      .attr('target', '_blank')
-      .append('div')
-      .classed('link', true)
-      .style('background-color', function() {
-        return themeColor(0.3);
-      })
-      .style('border-right', function() {
-        return '5px solid ' + themeColor(1);
-      });
+    if (link.url) {
+      var a = linksDiv.append('a')
+        .attr('href', link.url)
+        .attr('target', '_blank')
+        .append('div')
+        .classed('link', true)
+        .style('background-color', function() {
+          return themeColor(0.3);
+        })
+        .style('border-right', function() {
+          return '5px solid ' + themeColor(1);
+        });
 
-    a.append('p')
-      .classed('title', true)
-      .text(link.title);
+      a.append('p')
+        .classed('title', true)
+        .text(link.title);
 
-    a.append('p')
-      .classed('source', true)
-      .html(link.org);
+      a.append('p')
+        .classed('source', true)
+        .html(link.org);
+    } else {
+      var a = linksDiv.append('div')
+        .classed('link', true)
+        .style('background-color', function() {
+          return themeColor(0.3);
+        })
+        .style('border-right', function() {
+          return '5px solid ' + themeColor(1);
+        });
+
+      a.append('p')
+        .classed('title', true)
+        .text(link.title);
+
+      a.append('p')
+        .classed('source', true)
+        .html(link.org);
+    }
+
   })
 }
 
@@ -775,6 +924,17 @@ function buildVideo(obj, container, elIndex) {
 
 }
 
+
+function buildSVG(obj, container, cardIndex, elIndex) {
+  console.log("SVG!!!", obj);
+  var selector = '#' + container;
+  var table = d3.select(selector)
+    .append('svg')
+    .attr('id', obj.id)
+    .classed('col-xs-12', true)
+    .style('height', width / 4);
+
+}
 function buildImg(obj, container, cardIndex, elIndex) {
 
   var selector = '#' + container;
@@ -796,6 +956,16 @@ function buildImg(obj, container, cardIndex, elIndex) {
     .classed('img-responsive', true)
     .attr('src', obj.src)
     .attr('alt', obj.alt);
+    // .attr('onclick', function (d) {
+    //   var src = d3.select(this).attr('src');
+    //   var gif = src.includes('gif')
+    //
+    //   if (gif) {
+    //     return "this.src = " + src;
+    //   } else {
+    //     return null
+    //   }
+    // });
 
   d3.select(selector)
     .append('div')
@@ -1006,15 +1176,48 @@ function pulse(iso3) {
   d3.selectAll(a)
     .classed('pulse', true);
 
-  var country = d3.selectAll('.country' + a),
-    countryVal = country.attr('data-val');
+  var mapType = issueAreaData[issueArea].cards[activeCard].map.type;
 
-  if (countryVal) {
+  var country = d3.selectAll('.country' + a),
+    eez = d3.selectAll('.eez' + a),
+    val = country.attr('data-val');
+
+  var isInt = mapType == 'categorical' ? true : false,
+    isFloat = mapType == 'continuous' ? true : false,
+    isBool = mapType == 'boolean' ? true : false;
+
+  if (isFloat) {
     country.classed('active', true)
-      .style('fill', function () {
-        console.log(countryVal);
-        return d3.interpolateLab('white',rampColor(countryVal))(0.5);
+      .style('fill', function() {
+  //      console.log(val);
+        return d3.interpolateLab('white', rampColor(val))(0.5);
       });
+  } else if (isInt) {
+    country.classed('active', true)
+      .style('fill', function() {
+        return colorBrew[(val - 1) * 2];
+      });
+
+    eez.classed('active', true)
+      .style('opacity', 0.7);
+  } else if (isBool) {
+//    console.log('bool', isBool);
+
+    if (eval(val)) {
+  //    console.log('val', val);
+
+      country.classed('active', true)
+        .style('fill', function() {
+          return themeColor(1);
+        });
+
+      eez.classed('active', true)
+        .style('opacity', function() {
+          return 0.5;
+        });
+    //  console.log('isBool', isBool);
+    }
+
   }
 
 
@@ -1024,19 +1227,61 @@ function pulse(iso3) {
   //   })
 }
 
-function classEEZ (layer) {
+function classEEZ(layer) {
   d3.select('.card-eez-layer')
     .classed(layer, true);
 }
-function unpulse(iso3) {
 
+function unpulse(iso3) {
+  var dataVal = d3.selectAll('.country.' + iso3).attr('data-val');
+  var mapType = issueAreaData[issueArea].cards[activeCard].map.type;
+
+  var isInt = mapType == 'categorical' ? true : false,
+    isFloat = mapType == 'continuous' ? true : false,
+    isBool = mapType == 'boolean' ? true : false;
+
+  //  console.log('int', isInt, 'float', isFloat);
   d3.selectAll('.pulse')
     .classed('pulse', false);
 
-  if (d3.selectAll('.country.' + iso3).attr('data-val')) {
+  if (isFloat) {
     d3.selectAll('.country.' + iso3)
       .attr('style', null)
       .classed('active', false);
+  } else if (isInt) {
+    d3.selectAll('.country.' + iso3)
+      .style('fill', function() {
+        if (dataVal == 0) {
+          return null;
+        } else {
+          return colorBrew[(dataVal * 2) - 1];
+        }
+      });
+
+    d3.selectAll('.eez.' + iso3)
+      .style('opacity', 0.3);
+
+  } else if (isBool) {
+    dataVal = eval(dataVal);
+  //  console.log('bool', (dataVal))
+
+    d3.selectAll('.country.' + iso3).classed('active', true)
+      .style('fill', function() {
+  //      console.log(dataVal ? themeColor(0.5) : null);
+        return dataVal ? themeColor(0.5) : null;
+      });
+
+    d3.selectAll('.eez.' + iso3).classed('active', true)
+      //    .transition()
+      //  .delay(i * 10)
+      .style('opacity', function() {
+        //  console.log('fill', colorBrew[(val * 2) - 1]);
+        if (eval(dataVal) != true) {
+          return null;
+        } else {
+          return 0.2;
+        }
+      });
   }
 
 }
@@ -1130,7 +1375,7 @@ function buildMap(json) { // ### Need some way to attach EEZ layer to specific c
 
               //    var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso3]["c" + activeCard];
               var tooltipHTML = issueAreaData[issueArea].cards[activeCard].map.tooltipHTML(iso3);
-
+          //    console.log(tooltipHTML);
               var tooltipBody = tooltip.select('.tooltip-body');
               // #### here we should work out how to not display tooltip for null values ......... though it should be upstream of this
               tooltipBody.html(null);
@@ -1149,12 +1394,12 @@ function buildMap(json) { // ### Need some way to attach EEZ layer to specific c
           d3.select('div.tooltip').classed('hidden', true);
           d3.select('.legend-pointer').classed('hidden', true);
         });
-        // Hide tooltip on click
-        // .on('click', function () {
-        //   var t = d3.select('.tooltip');
-        //   console.log(t.classed('tooltip'));
-        //   t.classed('hidden', !t.classed('hidden'));
-        // });
+      // Hide tooltip on click
+      // .on('click', function () {
+      //   var t = d3.select('.tooltip');
+      //   console.log(t.classed('tooltip'));
+      //   t.classed('hidden', !t.classed('hidden'));
+      // });
 
       // Countries
       var countries = topojson.feature(geoData, geoData.objects.countries).features,
@@ -1313,6 +1558,7 @@ function buildMap(json) { // ### Need some way to attach EEZ layer to specific c
 
 
 d3.selection.prototype.moveToFront = function() {
+//  console.log('front!');
   return this.each(function() {
     this.parentNode.appendChild(this);
   });
@@ -1352,8 +1598,8 @@ function switchCard(target) {
   d3.select('.legend-pointer')
     .classed('hidden', true);
 
-  d3.select('.legend-g')
-    .classed('hidden', true);
+  d3.selectAll('.legend')
+    .classed('invisible', true);
 
   d3.select('.card.active')
     .classed('active', false);
@@ -1436,37 +1682,227 @@ Array.prototype.contains = function(needle) {
   return false;
 }
 
-function choropleth(cardIndex, order, key) {
-
+function choropleth(cardIndex, order, key, animated) {
+  //console.log('choro!', key);
   var target = 'card-' + cardIndex + '-layer';
   var vals = issueAreaData[issueArea].metadata.countryData;
+  var mapData = issueAreaData[issueArea].cards[cardIndex].map;
+  var mapType = mapData.type;
 
-  //console.log(ssiValues);
-  var i = 0;
-  for (iso3 in vals) {
-    var highlightedCountry = d3.selectAll('.eez.' + iso3);
-    var val = vals[iso3][key];
+  //console.log(cardIndex, mapType);
 
-    // First convert 0 - 100 range into 0 - 1.
-    if (!(val < 1 && val != 0)) {
-      val = val / 100;
+  d3.selectAll('.legend')
+    .classed('invisible', true);
+
+  d3.selectAll('.legend-cat')
+    .classed('invisible', true);
+
+  if (mapType == 'continuous') {
+    // First set up the legend
+    d3.select('.legend.continuous')
+      .classed('invisible', false)
+      .select('.legend-title')
+      .text(mapData.legend ? mapData.legend : null);
+
+    var i = 0;
+    for (iso3 in vals) {
+      if ($.inArray(iso3, includedCountries) != -1) {
+        var highlightedEEZ = d3.selectAll('.eez.' + iso3);
+        var highlightedCountry = d3.selectAll('.country.' + iso3);
+
+        var val = vals[iso3][key];
+
+        // Check if val is float; if so highlight on continuous scale
+
+
+        // First make sure that 0 - 100 range is converted into 0 - 1.
+        //  console.log('FLOAT');
+        if (!(val <= 1 && val != 0)) {
+          val = val / 100;
+        }
+
+        if (animated || animated == null ) {
+          highlightedEEZ.classed('active', true)
+            .transition()
+            .delay(i * 5)
+            .style('fill', function() {
+              if (order == -1) {
+                return rampColor(1 - val);
+              } else {
+                return rampColor(val);
+              }
+            });
+        } else {
+          highlightedEEZ.classed('active', true)
+            .style('fill', function() {
+              if (order == -1) {
+                return rampColor(1 - val);
+              } else {
+                return rampColor(val);
+              }
+            });
+        }
+
+
+        d3.selectAll('.country.' + iso3)
+          .attr('data-val', function (){
+            if (order == -1) {
+              return 1 - val;
+            } else {
+              return val;
+            }
+          });
+        i++;
+
+      }
     }
 
-    highlightedCountry.classed('active', true)
-      .transition()
-      .delay(i * 10)
-      .style('fill', function() {
-        if (order == -1) {
-          return rampColor(1 - val);
-        } else {
-          return rampColor(val);
-        }
-      });
+  } else if (mapType == 'categorical') { // val is an integer
 
-    d3.selectAll('.country.' + iso3)
-      .attr('data-val', val);
-    i++;
+    var i = 0;
+    var legendCategories = mapData.categories;
+    var legendTitle = mapData.legend;
+
+    // This is hard coded at a 433px tall categorical legend ... which i don't like. but it works for now.
+    var translateTitle = 'translate(0, 320)';
+
+    d3.select('.legend-categorical-title')
+      .attr('transform', translateTitle)
+      .text(legendTitle);
+
+    //console.log(legendCategories);
+
+    d3.select('.legend.categorical')
+      .classed('invisible', false);
+    // .select('.legend-title')
+    // .text(mapData.legend ? mapData.legend : null);
+    //
+    legendCategories.forEach(function(category, i) {
+
+      d3.select('.legend-cat text.cat-' + i)
+        .text(category);
+      d3.select('.legend-cat.cat-' + i)
+        .classed('invisible', false);
+
+
+      console.log(category, i);
+    })
+
+    for (iso3 in vals) {
+      var highlightedEEZ = d3.selectAll('.eez.' + iso3);
+      var highlightedCountry = d3.selectAll('.country.' + iso3);
+
+      var val = vals[iso3][key];
+
+      highlightedCountry.classed('active', true)
+        .transition()
+        .delay(i * 10)
+        .style('fill', function() {
+          //  console.log('fill', colorBrew[(val * 2) - 1]);
+          if (val == 0) {
+            return null;
+          } else {
+            return colorBrew[(val * 2) - 1];
+          }
+        });
+
+      d3.selectAll('.eez.' + iso3).classed('active', true)
+        .transition()
+        .delay(i * 10)
+        .style('fill', function() {
+          //  console.log('fill', colorBrew[(val * 2) - 1]);
+          if (val == 0) {
+            return null;
+          } else {
+            return colorBrew[(val * 2) - 1];
+          }
+        })
+        .style('opacity', 0.2);
+
+      d3.selectAll('.country.' + iso3)
+        .attr('data-val', val);
+
+      d3.selectAll('.eez.' + iso3)
+        .attr('data-val', val);
+      i++;
+
+    }
+
+
+
+
+
+  } else if (mapType == 'boolean') {
+    // single highlight option ...
+    console.log('bool!');
+    var i = 0;
+    var legendTitle = mapData.legend;
+
+    d3.select('.legend-boolean-title')
+      .text(legendTitle);
+
+    //console.log(legendCategories);
+
+    d3.select('.legend.boolean')
+      .classed('invisible', false);
+
+    for (iso3 in vals) {
+      var highlightedEEZ = d3.selectAll('.eez.' + iso3);
+      var highlightedCountry = d3.selectAll('.country.' + iso3);
+  //    console.log(vals[iso3])
+    //  console.log(':::', iso3, typeof vals[iso3][key]);
+
+      // Convert numeric into boolean:
+      var val = vals[iso3][key];
+      console.log('iso', iso3, 'val', val);
+
+      if (typeof val == 'number') {
+        if (val > 0) {
+          val = true;
+        } else {
+          val = false;
+        }
+
+      } else {
+        val = eval(vals[iso3][key].toLowerCase());
+
+      }
+      console.log(':::', iso3, typeof val);
+
+
+      highlightedCountry.classed('active', true)
+        .transition()
+        .delay(i * 10)
+        .style('fill', function() {
+          //  console.log('fill', colorBrew[(val * 2) - 1]);
+          if (!val) {
+            return null;
+          } else {
+            return themeColor(0.5);
+          }
+        });
+
+      d3.selectAll('.eez.' + iso3).classed('active', true)
+        .transition()
+        .delay(i * 10)
+        .style('fill', function() {
+          //  console.log('fill', colorBrew[(val * 2) - 1]);
+          if (!val) {
+            return null;
+          } else {
+            return themeColor(1);
+          }
+        })
+        .style('opacity', val ? 0.3 : null);
+
+      d3.selectAll('.country.' + iso3)
+        .attr('data-val', val.toString());
+      i++;
+
+    }
   }
+
+  // This is where we'd put the title of the legend
 
   d3.select('.legend-g')
     .classed('hidden', false);
@@ -1475,7 +1911,7 @@ function choropleth(cardIndex, order, key) {
 function updatePointer(tooltipVal) {
   d3.select('.legend-pointer')
     .classed('hidden', false)
-    .transition().delay(5)
+  //  .transition().delay(5)
     .attr('transform', 'translate(' + ((tooltipVal * 3) - 8.5) + ', -15)');
 
 }
@@ -1604,6 +2040,9 @@ function reset() {
     .duration(750)
     .style("stroke-width", null)
     .attr("transform", "");
+
+  d3.selectAll('.map-overlay')
+    .classed('invisible', true);
 }
 
 
@@ -1619,6 +2058,7 @@ function init() {
       ia.selectAll('p')
         .classed('invisible', true);
       ia.classed('small', true);
+    //  ia.style('height', 30);
       d3.select('#map-menu-wrapper')
         .transition()
         .style('margin-top', '30px');

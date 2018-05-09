@@ -29,7 +29,7 @@ function RadarChart(id, data, options) {
     };
 
     //Put all of the options into a variable called cfg
-    console.log('options', options.color);
+    // console.log('options', options.color);
     if ('undefined' !== typeof options) {
         for (var i in options) {
             if ('undefined' !== typeof options[i]) {
@@ -201,7 +201,7 @@ function RadarChart(id, data, options) {
             return radarLine(d);
         })
         .style("fill", function(d, i) {
-            console.log(i,cfg.color);
+            // console.log('iiii', i,cfg.color);
             return cfg.color[i];
         })
         .style("fill-opacity", cfg.opacityArea)
@@ -250,12 +250,15 @@ function RadarChart(id, data, options) {
         .attr("cy", function(d, i) {
             return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2);
         })
-        .style("fill", function(d, i, j) {
+        .style("fill",
+        function(d, i, j) {
           // for (k in j) {
           //   console.log('k',k);
           // }
-            return cfg.color[j];
-        })
+          // console.log('circles!', d, i, j, cfg.color[1]);
+            return cfg.color[1];
+        }
+      )
         .style("fill-opacity", 0.8);
 
     /////////////////////////////////////////////////////////
@@ -318,6 +321,7 @@ function RadarChart(id, data, options) {
             var text = d3.select(this),
                 words = text.text().split(/\s+/).reverse(),
                 word,
+                newWord,
                 line = [],
                 lineNumber = 0,
                 lineHeight = 1.4, // ems
@@ -326,10 +330,12 @@ function RadarChart(id, data, options) {
                 dy = parseFloat(text.attr("dy")),
                 tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
 
+            //console.log(words);
             while (word = words.pop()) {
                 line.push(word);
                 tspan.text(line.join(" "));
-                if (tspan.node().getComputedTextLength() > width) {
+                newWord = line.join(" "); // added by Lex to compare with @width
+                if (newWord.length > width) {
                     line.pop();
                     tspan.text(line.join(" "));
                     line = [word];

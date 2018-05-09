@@ -26,7 +26,7 @@ var ruleOfLawData = {
     loadIAcsv(csv, callback);
   },
   cards: [
-    {   // Card 0
+    { // Card 0
       title: 'Rule of Law',
       menu: 'Rule of Law',
       metadata: {
@@ -34,11 +34,13 @@ var ruleOfLawData = {
         description: 'Introduce the issue.'
       },
       map: {
+        type: 'continuous',
         scale: [],
         classes: 'card-eez-layer',
         translate: [],
         highlights: [],
         tooltip: true,
+        legend: 'Rule of Law Score',
         tooltipHTML: function(iso) {
 
           var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso].index;
@@ -73,31 +75,25 @@ var ruleOfLawData = {
         // },
         {
           tag: 'p',
-          html: 'To achieve lasting maritime security and good maritime governance, countries must have officials and institutions that reliably enforce government policy. Where these structures are undermined by corruption, inefficiency, and discriminatory practices, legal efforts to improve maritime security will have little effect.'
+          html: 'Rule of law is crucial for translating maritime security measures from paper to practice. Good governance of the maritime space requires bureaucratic and legal structures that are capable of developing, implementing, and enforcing policy. Where these structures are undermined by corruption, ineffectiveness, inefficiency, and inconsistent application of the law, legislative approaches to maritime security cannot be enforced and legal measures have little impact.'
         },
-        // { tag: 'h3',
-        //   text: 'The Rule of Law Scores'
-        // },
-        // {tag: 'indexTable'
-        // },
-        // { tag: 'caption',
-        //   text: 'Note: scores are rounded to the nearest whole number.'
-        // },
-        // { tag: 'p',
-        //   html: 'Our Rule of Law score considers five factors: corruption, government efficacy, government efficiency, judicial integrity, and inclusive governance. This year’s scores reveal strong governments across the region, though there are significant areas of concern in the southern Gulf of Guinea and the Horn of Africa. For more information about how these scores are calculated, please see our <a class="rule-of-law inline internal-ref" data-link="5">Methodology</a> page.'
-        // },
         {
-          tag: 'p',
-          html: 'Where the rule of law is strong, governments can be confident that legal efforts to address maritime crime and violence will yield results. These states can establish effective bodies to regulate industries like fishing and hold bureaucrats accountable for faithfully implementing policy. Such states are often better at monitoring and reporting so that policies can be reviewed and improved.'
+          tag: 'img',
+          src: '../../assets/rule-of-law/rule-of-law-coin-cloud.png', // This should be on the Stable Seas Deck - comments
+          alt: 'Command exercise, Crew of EU Naval Force frigate FGS Augsburg, police officers with EUCAP NESTOR and Djibouti Navy. Photo credit: European Union Naval Force',
+          caption: 'Command exercise, Crew of EU Naval Force frigate FGS Augsburg, police officers with EUCAP NESTOR and Djibouti Navy. Photo credit: European Union Naval Force'
         },
         {
           tag: 'p',
-          html: 'Countries with weak rule of law suffer from a disjuncture between policy and practice. Efforts to improve maritime security are impeded by poor norms and reporting structures, and this provides opportunities for corruption, bribe-seeking, and illicit economic activity. Additionally, these states lack the ability to effectively review, amend, and enforce new policies.'
+          html: 'Countries with high scores for rule of law also had high scores for coastal welfare and fisheries as well as relatively low levels of migration and human trafficking at sea. These correlations demonstrate the threat that corruption can pose to healthy fisheries management and participation in the legal coastal economy.'
         },
+        // {
+        //   tag: 'p',
+        //   html: 'This section is divided into three parts. The first section explores the intersection of corruption and the blue economy. Then next section discusses the role of the legal finish as a deterrent to transnational maritime crime. The section concludes with a review of methodology.'
+        // },
       ] // end of els array
     }, // End of first element of cards object
-    {   // Card 1
-
+    { // Card 1
       title: 'Fighting Corruption',
       menu: 'Fighting Corruption',
       metadata: {
@@ -105,36 +101,35 @@ var ruleOfLawData = {
         description: 'Corruption remains high, but efforts like EITI are making meaningful progress. Highlight Nigeria.'
       },
       map: {
+        type: 'continuous',
         path: './data/main.csv',
         scale: [],
         classes: 'card-eez-layer',
         translate: [],
         tooltip: true,
+        legend: 'Corruption Perceptions Index',
         tooltipHTML: function(iso) {
-
-          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['corruptionPerceptions'];
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['corruption'];
           tooltipVal = (tooltipVal * 100);
           updatePointer(tooltipVal);
-          return "Corruption Perceptions Index:<br />" + tooltipVal + " / 100";
-
+          return "Corruption Perceptions Index:<br />" + Math.round(tooltipVal) + " / 100 <br /><em>Note: Higher CPI scores indicate less corruption</em>";
         },
-        //  highlights: ['NGA'],
         load: function(index, js) {
           // Color EEZ according to change in Corruption Perceptions Index
           d3.select('.card-eez-layer')
             .classed('card-' + index + '-layer', true);
         },
         switch: function(index) {
-          choropleth(index, 1, 'deltaCorruptionPerceptions');
+          choropleth(index, 1, 'corruption'); // ### this needs updating!!
         }
       }, // end of 'map' object
       els: [{
           tag: 'h1',
-          text: 'Fighting Corruption***'
+          text: 'Fighting Corruption'
         },
         {
           tag: 'caption',
-          text: '*** Need updated map data *** <br />When dishonesty and bribery undermine legal efforts'
+          text: 'How dishonesty and bribery undermine legal efforts'
         },
         // {
         //   tag: 'legend',
@@ -143,11 +138,11 @@ var ruleOfLawData = {
         // },
         {
           tag: 'p',
-          html: 'Corruption remains the greatest threat to effective policy implementation in sub-Saharan Africa. It is especially threatening in the maritime domain due to weak state presence, proximity to international borders, and the great concentration of wealth that occurs at important seaports. Where the rule of law is weak, local officials take bribes, profit from selective enforcement of fisheries and environmental regulations, and permit black market trading and trafficking. According to Transparency International, corruption is especially acute in major states like Ghana and South Africa. The good news, however, is that many sub-Saharan countries have made significant progress against corruption over the last five years.'
+          html: 'Corruption remains the greatest threat to effective policy implementation in sub-Saharan Africa. It is especially threatening in the maritime domain due to weak state presence, proximity to international borders, and the great concentration of wealth that occurs at important seaports.'
         },
         {
           tag: 'p',
-          html: 'Where the rule of law is weak, local officials take bribes, profit from selective enforcement of fisheries and environmental regulations, and permit black market trading and trafficking. The good news, however, is that many sub-Saharan countries have made significant progress against corruption over the last five years.'
+          html: 'In corrupt coastal and maritime environments local officials take bribes, profit from selective enforcement of fisheries and environmental regulations, and permit black market trading and trafficking.These activities undermine the licit economy and prevent the effective development of the blue economy. The good news, however, is that many sub-Saharan countries have made significant progress against corruption over the last five years.'
         },
         {
           tag: 'img',
@@ -185,7 +180,7 @@ var ruleOfLawData = {
         }
       ]
     }, // End of second  object in cards array
-    {   // Card 2
+    { // Card 2
       title: 'Bribes and Bureaucracy',
       menu: 'Bribes & Bureaucracy',
       metadata: {
@@ -193,18 +188,20 @@ var ruleOfLawData = {
         description: 'Why is corruption linked to bureaucratic burdens, opportunities for bribery. Highlight firm behavior report.'
       },
       map: {
+        type: 'continuous',
         path: '../../data/main.csv',
         scale: [],
         classes: 'card-2-layer',
         translate: [],
         highlights: null,
         tooltip: true,
+        legend: 'WB "Trading Across Borders" Score',
         tooltipHTML: function(iso) {
 
-          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['easeOfTrade'];
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['efficiency'];
           tooltipVal = Math.round(tooltipVal * 100);
           updatePointer(tooltipVal);
-          return "Ease of Trade Index:<br />" + tooltipVal + " / 100";
+          return 'WB "Trading Across Borders" Score:<br />' + tooltipVal + " / 100";
 
         },
         load: function(index, js) { // ### do we need the 'js' parameter??
@@ -215,8 +212,8 @@ var ruleOfLawData = {
             .classed(layer, true); // in the data.issueArea.cards array
         },
         switch: function(index) {
-          // Map the Ease of Trade score (WB)
-          choropleth(index, 1, 'easeOfTrade');
+
+          choropleth(index, 1, 'efficiency');
 
           //  d3.select('.' + target).classed('invisible', false);
         }
@@ -247,31 +244,35 @@ var ruleOfLawData = {
         },
         {
           tag: 'p',
-          html: 'Where the rule of law is weak, administrative gatekeepers can demand bribes before goods can continue to their next destination. The World Bank estimates that the resulting transit delays cost African economies billions of dollars each year, so it is no surprise that recent anti-graft efforts in Kenya, Tanzania, Mozambique, and elsewhere have resulted in high-profile removals of customs officials and port directors.<sup>2</sup>'
+          html: 'When the rule of law is weak, administrative gatekeepers can demand bribes before goods can continue to their next destination. The World Bank estimates that the resulting transit delays cost African economies billions of dollars each year, so it is no surprise that recent anti-graft efforts in Kenya, Tanzania, Mozambique, and elsewhere have resulted in high-profile removals of customs officials and port directors.<sup>2</sup>'
         },
         {
           tag: 'p',
-          html: 'Solving this problem will require compliance from both African and non-African actors, as most of this kind of rent-seeking occurs as a transaction between an African recipient and non-African firm. Cooperation from the many multi-national corporations doing business in African seaports will be especially important. A 2016 report <sup>3</sup> from the United Nations Economic Commission for Africa found more than 99% of known cases of cross-border corruption in the region since 1994 involved non-African firms. These cases included simple bribery of port and customs authorities as well as more elaborate illicit financial schemes involving kickbacks, insurance fraud, money laundering, and selective enforcement of trade regulations.'
+          html: 'Each year, the World Bank measures these bureaucratic inefficiencies with a “Trading Across Borders” score. Countries receiving high scores move goods through their ports efficiently, limiting opportunities for bribe-seeking. Lower scores mark countries where inefficiencies and “red tape” increase opportunities for port corruption. These data are presented on the adjacent map.'
+        },
+        {
+          tag: 'p',
+          html: 'Solving this problem will require compliance from both African and non-African actors, as most of this kind of rent-seeking occurs as a transaction between an African recipient and non-African firm. Cooperation from the many multinational corporations doing business in African seaports will be especially important. A 2016 report <sup>3</sup> from the United Nations Economic Commission for Africa found more than 99% of known cases of cross-border corruption in the region since 1994 involved non-African firms. These cases included simple bribery of port and customs authorities as well as more elaborate illicit financial schemes involving kickbacks, insurance fraud, money laundering, and selective enforcement of trade regulations.'
         },
         {
           tag: 'p',
           html: 'The cross-border corruption occurring in African seaports has detrimental spillover effects for other sectors. Preferential treatment of foreign firms, norms of rent-seeking, and corrupt officials can negatively influence the regulatory environment for domestic businesses that are far removed from international trade.'
         },
-        {
-          tag: 'img',
-          src: '../../assets/rule-of-law/firm-behavior.jpeg',
-          alt: 'Firm Behavior in Fragile States',
-          caption: 'Firm Behavior in Fragile States by Dr Victor Owuor',
-          link: 'http://oefresearch.org/publications/firm-behavior-fragile-states'
-        },
-        {
-          tag: 'p',
-          html: 'The recent <em> Firm Behavior in Fragile States </em> report on the issues facing small firms in fragile sub-Saharan economies highlights how excessive bureaucracy and regulation suppress business growth, impose unnecessary “facilitation fees,” and weaken judicial integrity. The report, based on field research in Somaliland, the Democratic Republic of the Congo, and South Sudan, strongly argues that informal non-governmental arrangements like business collectives, sector-specific cooperatives, and public-private partnerships must be part of the solution.'
-        },
-        {
-          tag: 'p',
-          html: 'Unless governments can rein in corruption and improve maritime trade governance, it will be difficult for governments, private associations, and institutions to promote a stronger rule of law and healthier business environment.'
-        },
+        // {
+        //   tag: 'img',
+        //   src: '../../assets/rule-of-law/firm-behavior.jpeg',
+        //   alt: 'Firm Behavior in Fragile States',
+        //   caption: 'Firm Behavior in Fragile States by Dr Victor Owuor',
+        //   link: 'http://oefresearch.org/publications/firm-behavior-fragile-states'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'The recent <em> Firm Behavior in Fragile States </em> report on the issues facing small firms in fragile sub-Saharan economies highlights how excessive bureaucracy and regulation suppress business growth, impose unnecessary “facilitation fees,” and weaken judicial integrity. The report, based on field research in Somaliland, the Democratic Republic of the Congo, and South Sudan, strongly argues that informal non-governmental arrangements like business collectives, sector-specific cooperatives, and public-private partnerships must be part of the solution.'
+        // },
+        // {
+        //   tag: 'p',
+        //   html: 'Unless governments can rein in corruption and improve maritime trade governance, it will be difficult for governments, private associations, and institutions to promote a stronger rule of law and healthier business environment.'
+        // },
         {
           tag: 'links',
           items: [{
@@ -290,227 +291,218 @@ var ruleOfLawData = {
         }
       ]
     }, // End of third object in cards array
-    // {   // Card 3
-    //
-    //   title: 'Weak Sovereignty',
-    //   menu: 'Weak Sovereignty',
-    //   metadata: {
-    //     owner: 'Kelsey Soeth',
-    //     description: 'Highlight an area that is under weak state control, poor governance - maybe the Bijagós in guinea-bissau.'
-    //   },
-    //   map: {
-    //     path: '../../data/main.csv',
-    //     scale: [],
-    //     classes: 'card-eez-layer',
-    //     translate: [],
-    //     extent: [
-    //       [-20, 14],
-    //       [-3, 7]
-    //     ],
-    //     highlights: ['GNB'], // Guinea Bissau
-    //     tooltip: false,
-    //     load: function(index, js) {
-    //       var layer = 'card-' + index + '-layer';
-    //       // d3.select('.card-eez-layer')
-    //       //   .classed(layer, true)
-    //     },
-    //     switch: function(target) {
-    //       //  ### Need to figure out what this map will look like
-    //
-    //     }
-    //   },
-    //   els: [{
-    //       tag: 'h1',
-    //       text: 'Weak Sovereignty'
-    //     },
-    //     {
-    //       tag: 'caption',
-    //       text: 'Weak local control undermines regional stability'
-    //     },
-    //     // {
-    //     //   tag: 'legend',
-    //     //   text: 'Map Legend',
-    //     //   legendContent: '<em>The Bijagos are the island group off the coast of Guinea-Bissau.</em>'
-    //     // },
-    //     {
-    //       tag: 'p',
-    //       html: 'Weak state control is a particular problem for states with offshore territories, such as Guinea-Bissau. The Bijagós Islands are a group of 88 islands and islets located in the Atlantic Ocean. Only 23 of the islands are inhabited.<sup>4</sup>'
-    //     },
-    //     {
-    //       tag: 'img',
-    //       src: '../../assets/rule-of-law/packets_cocaine_guinea_bissau.jpg', // This should be on the Stable Seas Deck - comments
-    //       alt: 'Packets of seized cocaine at a police station in Guinea-Bissau. Photo: Issouf Sanogo/AFP/Getty Images',
-    //       caption: 'Packets of seized cocaine at a police station in Guinea-Bissau. Photo: Issouf Sanogo/AFP/Getty Images'
-    //     },
-    //     {
-    //       tag: 'blockquote',
-    //       html: '“The greatest fragility we have is the islands, many of them uninhabited, but still the drug traffickers use them as a depot and then transport [the drug] to the continent. On the other hand, even in those that are inhabited the presence of the state is weak, or in some cases nonexistent.” —Mamadu Djalo Pires, Minister of Justice, Guinea-Bissau, 2009; translated<sup>5</sup>', //### need closed brackets around the words "the drug" in this blockquote
-    //       link: 'http://***.org/***' // What about internal references?
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'Since the early 2000s, the isolated and practically autonomous islands have proven an attractive lure for Latin American drug cartels to use as a waystation for <a class="illicit-trade inline" href="../../illicit-trade#2">drug-smuggling operations</a> into Europe and Africa. The large swaths of uninhabited land are physically ideal for hiding drugs and speedboats, and the easy money of harboring drug smugglers is attractive to residents who have little to nothing to fear from a faraway authority with little capacity to enforce the law. The few patrol vessels belonging to Guinea-Bissau are not able to effectively monitor the islands due to their limited resources.<sup>6</sup>'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'To weaken transnational crime in the Bijagós Islands, Guinea-Bissau will need to continue to improve its offshore communications infrastructure and allocate resources to more effectively patrol its maritime territory. While Guinea-Bissau is ultimately responsible for maintaining the rule of law over the Bijagós Islands, combatting transnational crime requires international partnerships.'
-    //     },
-    //     {
-    //       tag: 'links',
-    //       items: [{
-    //           org: '<sup>4</sup> Adam Nossiter, "Bijagós, a Tranquil Haven in a Troubled Land," <em>The New York Times</em>, 4 November 2009,',
-    //           url: 'http://www.nytimes.com/2009/11/08/travel/08Bijagos.html?mcubz=1'
-    //         },
-    //         {
-    //           org: '<sup>5</sup> S.A, RTP, Rádio e Televisão de Portugal 2009 LUSA Agência de Notícias de Portugal. “Arquipélago Dos Bijagós Utilizado Como Depósito Dos Narcotraficantes.” Accessed September 28, 2017.',
-    //           url: 'https://www.rtp.pt/noticias/mundo/arquipelago-dos-bijagos-utilizado-como-deposito-dos-narcotraficantes_n302245.'
-    //         },
-    //         {
-    //           org: '<sup>6</sup> Amy Corbin and Ashley Tindall, "Bijagós Archipelago,” Sacred Land Film Project, 1 September 2007,',
-    //           url: 'http://www.sacredland.org/bijagos-archipelago/'
-    //         },
-    //       ]
-    //     }
-    //   ]
-    // }, // End of fourth  object in cards array
-    // {   // Card 4
-    //
-    //   title: 'Gender Equality',
-    //   menu: 'Gender Equality',
-    //   metadata: {
-    //     owner: 'Kelsey Soeth',
-    //     guest: 'Our Secure Future',
-    //     description: 'Partner with OSF to talk about inclusion of women, perhaps in national security strategies.'
-    //   },
-    //   map: {
-    //     path: '../../data/main.csv',
-    //     scale: [],
-    //     classes: 'card-4-layer',
-    //     translate: [],
-    //     highlights: null,
-    //     tooltip: true,
-    //     tooltipHTML: function(iso) {
-    //
-    //       var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['inclusion'];
-    //       tooltipVal = Math.round(tooltipVal * 100);
-    //       return "Inclusion:<br />" + tooltipVal + " / 100";
-    //
-    //     },
-    //     load: function(index, js) {
-    //       // Color map with 'some aspect of inclusion' chloropleth ...
-    //       d3.select('.card-eez-layer')
-    //         .classed('card-' + index + '-layer', true);
-    //     },
-    //     switch: function(index) {
-    //
-    //       choropleth(index, 1, 'inclusion');
-    //       // var target = 'card-' + index + '-layer';
-    //       // var vals = issueAreaData[issueArea].metadata.countryData;
-    //       // var valsArr = [];
-    //       // vals.forEach(function(val) {
-    //       //   valsArr.push(parseFloat(val.ia3c4));
-    //       // });
-    //       //
-    //       // var max = d3.max(valsArr);
-    //       // var min = d3.min(valsArr);
-    //       // var range = max - min;
-    //       //
-    //       // vals.forEach(function(d, i) {
-    //       //   console.log(d.ia3c4);
-    //       //   d3.selectAll('.eez.' + d.iso3)
-    //       //     .transition()
-    //       //     .delay(i * 10)
-    //       //     .style('fill', function() {
-    //       //       return rampColor(1 - ((d.ia3c4 - min) / range));
-    //       //     });
-    //       // });
-    //       //
-    //       // d3.select('.' + target)
-    //       //   .classed('invisible', false);
-    //
-    //       //setBGImg();
-    //     }
-    //   },
-    //   els: [{
-    //       tag: 'h1',
-    //       text: 'Gender Equality'
-    //     },
-    //     {
-    //       tag: 'caption',
-    //       text: 'How women\'s inclusion strengthens the rule of law'
-    //     },
-    //     // {
-    //     //   tag: 'legend',
-    //     //   text: 'Map Legend',
-    //     //   legendContent: '<em>Lighter shades indicate more gender-inclusive political systems. <br> Source: <a href="https://www.v-dem.net/en/" target="_blank">Varieties of Democracy</a></em>'
-    //     // },
-    //     {
-    //       tag: 'p',
-    //       html: 'Equal treatment under the law regardless of ethnicity, socioeconomic status, religion, subnational region, or gender is the basis of inclusive governance. Levels of inclusion vary greatly along the sub-Saharan coastline, though many states have made notable progress in this area, especially with regard to greater inclusion of women.'
-    //     },
-    //     {
-    //       tag: 'img',
-    //       src: '../../assets/rule-of-law/NetumboNandi-Ndaitwah_03-2015.jpg', // This should be on the Stable Seas Deck - comments
-    //       alt: 'Deputy Prime Minister of Namibia Netumbo Nandi-Ndaitwah shakes hands with politician Penehupifo Pohamba. Photo: Benutzer:Chtrede',
-    //       caption: 'Deputy Prime Minister of Namibia Netumbo Nandi-Ndaitwah shakes hands with politician Penehupifo Pohamba. Photo: Benutzer:Chtrede'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'As of 2016, 19 members<sup>7</sup> of the African Union had developed and adopted National Action Plans on Women, Peace, and Security, including several of the top-ranking coastal states included in this analysis. The objective of these National Action Plans is the implementation of UN Security Council Resolution 1325, which calls for increased participation and representation of women at all levels of decision-making in an effort to empower women to participate as equals in preventing conflict and peacebuilding. These agreements do not speak specifically to the role of women in improving maritime governance, but they are an important step toward formalizing women’s inclusion.'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'Several countries have improved women’s representation through new legislation and development-oriented partnerships with regional and global organizations. Senegal, for example, has been particularly successful at incorporating gender parity into its governance structures.'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'Following the 2010 adoption of a new law requiring gender parity for candidates for elected positions, women’s participation in local government tripled from 15.9% in 2009 to 47.2% in 2015. Furthermore, 20% of ministerial-level positions were held by women as of 2015. According to the most recent data from the Inter-Parliamentary Union and the World Bank, The Gambia, Ghana, Guinea-Bissau, Namibia, and Nigeria have even higher proportions of women in high-level political positions.<sup>8</sup>'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       html: 'As Sierra Leone emphasized in its national security strategy following its devastating civil war, poverty and a lack of social cohesion are national security threats that require civilian engagement to counter. To this end, Somalia is promoting women’s economic empowerment through a number of fisheries projects by the Food and Agriculture Organization of the United Nations (FAO). These projects include training women boat-builders and adding value to post-harvest fish catches. One community organizer working with the project notes:'
-    //     },
-    //     {
-    //       tag: 'blockquote',
-    //       html: '“It is important to have women involved in these activities since their contributions have a big influence on ensuring stronger household level financial management and food security that will directly benefit their families.”',
-    //       source: 'Ms. Shukri Ahmed Mohamed, community organizer with FAO Somalia<sup>9</sup',
-    //       link: '#'
-    //     },
-    //     {
-    //       tag: 'p',
-    //       text: 'Programs like this, when coupled with equal property and business rights for women, can greatly expand licit opportunities in coastal economies. Equal application of the rule of law across society is necessary for good governance. Whether gender equality is achieved through legislated parity or economic initiatives, the equal application of the rule of law can only help the region achieve peace and security and alleviate poverty.'
-    //     },
-    //     {
-    //       tag: 'links',
-    //       items: [{
-    //           org: '<sup>7</sup> Semiha Abdulmelik, “Implementation of the Women, Peace, and Security Agenda in Africa,” The African Union Commission, July 2016.',
-    //           url: 'http://www.un.org/en/africa/osaa/pdf/pubs/2016womenpeacesecurity-auc.pdf'
-    //         },
-    //         {
-    //           org: '<sup>8</sup> Ibid.'
-    //         },
-    //         {
-    //           org: '<sup>9</sup> "Promoting Gender in Fisheries Activities in Somalia," Food and Agriculture Organization of the United Nations, accessed 28 August 2017.',
-    //           url: 'http://www.fao.org/blogs/blue-growth-blog/promoting-gender-in-fisheries-activities-in-somalia/en/'
-    //         },
-    //       ]
-    //     }
-    //   ]
-    // }, // End of fifth  object in cards array
-    {   // Card 5
+    { // Card 3
+      title: 'Inclusion',
+      menu: 'Inclusion',
+      metadata: {
+        owner: 'Curtis Bell',
+        description: ''
+      },
+      map: {
+        type: 'continuous',
+        scale: [],
+        classes: '',
+        translate: [],
+        highlights: null,
+        tooltip: true,
+        legend: 'Measure of inclusion',
+        tooltipHTML: function(iso) {
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['inclusion'];
+          tooltipVal = Math.round(tooltipVal * 100);
+          updatePointer(tooltipVal);
+          return "Measure of inclusion:<br />" + tooltipVal + " / 100";
 
-      title: 'Methodology',
-      menu: 'Methodology',
+        },
+        load: function(index, csv) {
+          var layer = 'card-' + index + '-layer';
+
+          d3.select('.card-eez-layer')
+            .classed(layer, true);
+        },
+        switch: function(index) {
+          choropleth(index, 1, 'inclusion');
+        }
+      },
+      els: [{
+          tag: 'h1',
+          html: 'Inclusion'
+        },
+        {
+          tag: 'caption',
+          text: 'Linking marginalization to maritime insecurity'
+        },
+        {
+          tag: 'p',
+          html: 'Equal treatment under the law, regardless of ethnicity, socioeconomic status, religion, subnational region, or gender, is the basis of inclusive governance. Inclusive governance is important in coastal areas because marginalized groups are less likely to possess the resources and property rights needed to make a living wage through legal economic activities. In this way, exclusion can depress coastal economies and compel some to turn toward maritime crime and illicit economy activity.'
+        },
+        {
+          tag: 'p',
+          html: 'Levels of inclusion vary greatly along the sub-Saharan coastline, though many states have made notable progress in this area. In Somalia, for example, Somalia women’s economic empowerment is being expanded through a number of fisheries projects by the Food and Agriculture Organization of the United Nations (FAO). These projects include training women boat-builders and adding value to post-harvest fish catches. One community organizer working with the project notes:'
+        },
+        {
+          tag: 'blockquote',
+          html: '“It is important to have women involved in these activities since their contributions have a big influence on ensuring stronger household level financial management and food security that will directly benefit their families.”',
+          source: 'Ms. Shukri Ahmed Mohamed, community organizer with FAO Somalia<sup>9</sup',
+          link: '#'
+        },
+        {
+          tag: 'p',
+          html: 'Programs like this, when coupled with equal property and business rights for women, can greatly expand licit opportunities in coastal economies. These opportunities are a strong defense against illicit economic activities.'
+        },
+        {
+          tag: 'p',
+          html: 'Our inclusion data, presented on the adjacent map, also account for inclusion across religion, class, ethnicity, and region. Exclusion based on any of these factors can threaten political stability and economic development in coastal areas.'
+        }
+      ]
+
+    },
+    { // Card 4
+      title: 'Exploiting Weak Governance',
+      menu: 'Exploiting Weak Governance',
+      metadata: {
+        owner: 'Curtis Bell',
+        description: ''
+      },
+      map: {
+        type: 'continuous',
+        path: '../../data/main.csv',
+        scale: [],
+        classes: 'card-2-layer',
+        translate: [],
+        highlights: null,
+        tooltip: true,
+        legend: 'Measure of efficacy',
+        tooltipHTML: function(iso) {
+
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['efficacy'];
+          tooltipVal = Math.round(tooltipVal * 100);
+          updatePointer(tooltipVal);
+          return "Measure of efficacy:<br />" + tooltipVal + " / 100";
+
+        },
+        load: function(index, js) { // ### do we need the 'js' parameter??
+          // Color EEZ -- Ease of Trade score
+          var layer = 'card-' + index + '-layer';
+
+          d3.select('.card-eez-layer')
+            .classed(layer, true); // in the data.issueArea.cards array
+        },
+        switch: function(index) {
+
+          choropleth(index, 1, 'efficacy');
+
+          //  d3.select('.' + target).classed('invisible', false);
+        }
+      },
+      els: [{
+          tag: 'h1',
+          text: 'Exploiting Weak Governance'
+        },
+        {
+          tag: 'caption',
+          text: 'Weak local control undermines regional stability'
+        },
+        {
+          tag: 'p',
+          html: 'Even where countries invest heavily in good port management and port security, maritime governance can be undermined by a weak state presence in remote coastal areas. Any coastal location with a weak state presence can be exploited, and this means countries in this region must maintain adequate law enforcement capabilities and maritime domain awareness across the entirety of their maritime spaces.'
+        },
+        {
+          tag: 'p',
+          html: 'Unfortunately, the same geographic characteristics that undermine effective law enforcement also provide safe sanctuaries for traffickers, pirates, and insurgents operating in maritime spaces. Small, portable, high-value goods, including cocaine and heroin, are most likely to be smuggled in these areas. These problems are especially evident in offshore island groups, such as Guinea-Bissau’s Bijagos archipelago or the Lamu region of Kenya.'
+        },
+        {
+          tag: 'p',
+          html: 'When states eliminate these “blind spots,” they gain the ability to enforce good policy and exert local control. Legislation can more directly translate into action and states can become much more likely to successfully curb illicit maritime activities. Because criminal networks based in under-governed locales travel great distances to smuggle or pirate, eliminating local areas with weak governance can significantly improve maritime security over very large regions.'
+        },
+        {
+          tag: 'img',
+          src: '../../assets/rule-of-law/packets_cocaine_guinea_bissau.jpg', // This should be on the Stable Seas Deck - comments
+          alt: 'Packets of seized cocaine at a police station in Guinea-Bissau. Photo: Issouf Sanogo/AFP/Getty Images',
+          caption: 'Packets of seized cocaine at a police station in Guinea-Bissau. Photo: Issouf Sanogo/AFP/Getty Images'
+        },
+        {
+          tag: 'blockquote',
+          html: '“The greatest fragility we have is the islands, many of them uninhabited, but still the drug traffickers use them as a depot and then transport [the drug] to the continent. On the other hand, even in those that are inhabited the presence of the state is weak, or in some cases nonexistent.” —Mamadu Djalo Pires, Minister of Justice, Guinea-Bissau, 2009; translated<sup>5</sup>', //### need closed brackets around the words "the drug" in this blockquote
+          link: 'http://***.org/***' // What about internal references?
+        },
+        { tag: 'links',
+          items: [
+            {org: '<sup>5</sup> S.A, RTP, Rádio e Televisão de Portugal 2009 LUSA Agência de Notícias de Portugal. “Arquipélago Dos Bijagós Utilizado Como Depósito Dos Narcotraficantes.” Accessed September 28, 2017.', url: 'https://www.rtp.pt/noticias/mundo/arquipelago-dos-bijagos-utilizado-como-deposito-dos-narcotraficantes_n302245.'}
+          ]
+        }
+
+      ]
+    },
+    { // Card 5
+      title: 'The Legal Finish',
+      menu: 'The Legal Finish',
+      metadata: {
+        owner: 'Curtis Bell',
+        description: ''
+      },
+      map: {
+        type: 'continuous',
+        scale: [],
+        classes: '',
+        translate: [],
+        highlights: null,
+        tooltip: true,
+        legend: 'Judicial Integrity Measure',
+        tooltipHTML: function(iso) {
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['judicial_integrity'];
+          tooltipVal = Math.round(tooltipVal * 100);
+          updatePointer(tooltipVal);
+          return "Judicial Integrity measure:<br />" + tooltipVal + " / 100";
+
+        },
+        load: function(index, csv) {
+          var layer = 'card-' + index + '-layer';
+
+          d3.select('.card-eez-layer')
+            .classed(layer, true);
+        },
+        switch: function(index) {
+          choropleth(index, 1, 'judicial_integrity');
+        }
+      },
+      els: [{
+          tag: 'h1',
+          html: 'The Legal Finish'
+        },
+        {
+          tag: 'caption',
+          text: 'Just outcomes require sound legal systems'
+        },
+        {
+          tag: 'p',
+          html: 'Capacity-building efforts focus on detecting illicit maritime activity and apprehending suspects, but effective legal structures are no less important to good maritime governance. Without an accountable and fair judiciary, suspects cannot receive due process and counter-piracy or counter-trafficking efforts lose effectiveness and legitimacy. For these reasons, judicial integrity is a core component of the rule of law and a prerequisite for sustainable maritime security.'
+        },
+        {
+          tag: 'p',
+          html: 'There is growing recognition of the importance of a strong “legal finish” to maritime enforcement strategies. In Somalia, Nigeria, and elsewhere, officials recognize that suspects are apprehended in vain if states do not have the policies and bureaucracies needed to prosecute maritime crimes in a timely and transparent manner. This is why major regional maritime security exercises like the Gulf of Guinea’s Obangame Express now conclude with mock trials. Countries building judicial integrity can replicate successful policies from other countries and explicitly address legal finishes in their national maritime security strategies.'
+        },
+        {
+          tag: 'p',
+          html: 'We gauge judicial integrity with Varieties of Democracy data on government attacks on the judiciary, the prevalence of bribery in a country’s court system, and the extent to which corrupt judges are held accountable for their crimes. We find that this factor correlates highly with other components of the rule of law, including corruption and government efficacy. These aspects of the rule of law are positively reinforcing: countries with sound judicial systems are better able to prosecute corruption and lower levels of corruption are conducive for building stronger legal structures.'
+        }
+      ]
+    },
+    { // Card 6
+
+      title: 'Data and Methods',
+      menu: 'Data and Methods',
       metadata: {
         owner: 'Curtis Bell',
         description: 'Methods.'
       },
       map: {
+        type: 'continuous',
         scale: [],
         classes: 'card-5-layer',
         translate: [],
         highlights: null,
         tooltip: true,
+        legend: 'Rule of Law Score',
         tooltipHTML: function(iso) {
 
           var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso].index;
@@ -519,8 +511,7 @@ var ruleOfLawData = {
           return "Rule of Law:<br />" + tooltipVal + " / 100";
 
         },
-        load: function(index, csv) { // ### *** This only should be for the first card ...
-          // Color EEZ according to master Stable Seas index
+        load: function(index, csv) {
           var layer = 'card-' + index + '-layer';
 
           d3.select('.card-eez-layer')
@@ -531,9 +522,61 @@ var ruleOfLawData = {
         }
       },
       els: [{
-          tag: 'h3',
-          text: 'Methodology'
+          tag: 'h1',
+          html: 'Data and Methods'
         },
+        {
+          tag: 'caption',
+          text: 'How we created the Rule of Law score'
+        },
+        {
+          tag: 'p',
+          html: 'Good maritime governance requires bureaucratic and legal structures that are capable of designing, implementing, and enforcing policy. Threats to the rule of law, including corruption, bribery, discrimination, and underdeveloped and ineffective political institutions impede a state’s capacity to provide good maritime governance. We measure the Rule of Law Score with five equally weighted components:'
+        },
+        {
+          tag: 'h4',
+          html: 'Corruption'
+        },
+        {
+          tag: 'p',
+          html: 'Corrupt officials fail to enforce policy and enable transnational crime and corruption in maritime governance. Maritime trade is especially affected because nearly all of Africa’s international trade transits the maritime space. Many organizations have created corruption measures already, so we adapt the <a href="https://www.transparency.org/news/feature/corruption_perceptions_index_2016" target="_BLANK">Corruption Perceptions Index by Transparency International</a> to create the Corruption Component. This measure averages 13 other corruption variables, with more corrupt countries earning lower values.'
+        },
+        {
+          tag: 'h4',
+          html: 'Efficacy'
+        },
+        {
+          tag: 'p',
+          html: 'Ineffective governments cannot enforce policy, and this hinders a state’s ability to secure its maritime space and prevent illicit maritime activities. We measure efficacy by rescaling the Functioning of Government indicator from Freedom House. The Freedom House Functioning of Government indicator ranges from 0 to 12, with the most efficacious governments receiving higher scores.'
+        },
+        {
+          tag: 'h4',
+          html: 'Government Efficiency'
+        },
+        {
+          tag: 'p',
+          html: 'Governments with unnecessary administrative and bureaucratic hurdles provide more opportunities for bribery and corruption, especially as these systems relate to trade, customs, and international migration. Each year, the World Bank Doing Business report gauges government efficiency in several areas, one of which is Trading Across Borders. This indicator is computed from expert estimates of the amount of time and money required to move a standard shipping container into the country. The measure is especially relevant for efficiency in African maritime governance, as the region’s international trade transits almost exclusively through seaports.'
+        },
+        {
+          tag: 'h4',
+          html: 'Judicial Integrity'
+        },
+        {
+          tag: 'p',
+          html: 'Judicial integrity is important to the enforcement of existing laws and ensuring that the de jure regulations are de facto conditions. Where judges are bribed and laws go unenforced, the rule of law is too weak for policies aimed at the maritime domain to be effective. We create the Judicial Integrity Component using three indicators from the Varieties of Democracy Project (V-Dem), a leading dataset on the strength of governance around the world: Judicial Attacks, Judicial Accountability, and Judicial Bribery.'
+        },
+        {
+          tag: 'h4',
+          html: 'Inclusion'
+        },
+        {
+          tag: 'p',
+          html: 'We gauge political inclusion with five indicators from the Varieties of Democracy Project (V-Dem). These cover unequal treatment under the law according to social group identification, subnational region, religion, socioeconomic status, and gender. These are measures of equal treatment under the law, and not the absolute provision of liberal and transparent governance. Non-democratic states can score well if the law is equally applied across all five of these social divisions.'
+        },
+        {
+          tag: 'p',
+          html: 'More details about all of these scores are available on our data page.'
+        }
         // { tag: 'legend',
         //   text: 'Map Legend',
         //   legendContent: '<em>Lighter shades indicate higher Rule of Law scores.</em>'

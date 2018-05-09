@@ -23,24 +23,6 @@ var maritimeEnforcementData = {
   },
   load: function(csv, callback) {
     loadIAcsv(csv, callback);
-    // var md = issueAreaData[issueArea].metadata;
-    //
-    // // Load index value data from CSV - page-wide data!
-    // d3.csv(csv, function(vals) {
-    //   vals.forEach(function(d) {
-    //     d.ia4c0 = +d.ia4c0;
-    //     d.ia4c1 = +d.ia4c1;
-    //     d.ia4c4 = +d.ia4c4;
-    //   });
-    //   issueAreaData[issueArea].metadata.countryData = vals; // Master data load - csv file into 'data' object
-    //   callback('maritimeEnforcement load csv callback');
-    // });
-    //
-    // d3.csv('../../data/' + md.path + '/indexValues.csv', function(vals) {
-    //
-    //   issueAreaData[issueArea].metadata.indexData = vals;
-    //
-    // });
   },
   cards: [
     { // Card 0
@@ -51,14 +33,19 @@ var maritimeEnforcementData = {
         description: 'Introduce the issue.'
       },
       map: {
+        type: 'continuous',
         scale: [],
         classes: 'card-eez-layer',
         translate: [],
         highlights: [],
         tooltip: true,
-        units: {
-          text: 'xo units',
-          multiplier: 100
+        legend: 'Maritime Enforcement Score',
+        tooltipHTML: function(iso) {
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso].index;
+          tooltipVal = Math.round((tooltipVal * 100));
+          updatePointer(tooltipVal);
+          return "Maritime Enforcement:<br />" + tooltipVal + " / 100";
+
         },
         load: function(index, csv) { // ### *** This only should be for the first card ...
           // Class EEZ with card-0-layer to enable switch() method
@@ -67,26 +54,7 @@ var maritimeEnforcementData = {
             .classed(layer, true);
         },
         switch: function(index) {
-
-          var values = issueAreaData[issueArea].metadata.countryData;
-          var valsArr = [];
-
-          values.forEach(function(row, i) {
-            valsArr.push(row.ia4c0);
-          });
-
-          var max = d3.max(valsArr),
-            min = d3.min(valsArr),
-            range = max - min;
-
-          values.forEach(function(row, i) {
-            d3.selectAll('.eez.' + row.iso3)
-              .classed('active', true)
-              .style('fill', function() {
-                return rampColor(1 - ((row.ia4c0 - min) / range));
-              });
-
-          })
+          choropleth(index, 1, 'index');
         }
       },
       els: [{
@@ -98,159 +66,98 @@ var maritimeEnforcementData = {
           text: 'Building capacity to enhance maritime governance'
         },
         {
-          tag: 'legend',
-          text: 'Map Legend',
-          legendContent: '<em>Lighter shades indicate a greater number of coastal patrol vessels Source: 2016 Military Balance Report</em>'
-        },
-        // { tag: 'legend',
-        //   text: 'Map Legend',
-        //   legendContent: '<em>Lighter shades indicate greater maritime enforcement capability.<br> <a class="maritime-enforcement inline internal-ref" data-link"7">Methodology</a></em>'
-        // },
-        {
           tag: 'p',
           html: 'Good maritime governance is not possible without navies and coast guards that are adequate for monitoring territorial waters and exclusive economic zones. Where states are up to this task, smugglers and traffickers cannot operate freely and fisheries laws are enforceable. However, inadequate capacity to govern the maritime space can hamper a country’s efforts to regulate maritime activity and effectively render any maritime legislation irrelevant. Poor capacity in this area provides tempting opportunities for those who seek to profit from the absence of real enforcement of maritime law.'
         },
-        // { tag: 'h3',
-        //   text: 'The Maritime Enforcement Scores'
-        // },
-        // {tag: 'indexTable'
-        // },
-        // { tag: 'caption',
-        //   text: 'Note: scores are rounded to the nearest whole number.'
-        // },
-        // { tag : 'p',
-        //   html: 'We conceptualize maritime enforcement capability as being a function of a country’s maritime assets combined with the level of assistance it receives from international partners and the unique geographical attributes of its particular maritime space. More specifically, we derive the subindex score from the following five inputs:  (1) geography of the Exclusive Economic Zone (EEZ), (2) relations with maritime neighbors, (3) coastal patrol assets, (4) an naval capability assessment, and (5) an international assistance assessment. More details can be found on the <a class="maritime-enforcement inline internal-ref" data-link="7">Methodology</a>'
-        // },
-        //   { tag: 'p',
-        //    html: 'Nigeria and South Africa, the only countries in the region with fleets capable of regularly conducting sustained law enforcement operations far from shore, lead the Maritime Enforcement section of the Stable Seas Maritime Security Index. These regional powers are followed by other countries that have invested in maritime enforcement, such as Cameroon, Djibouti, and Kenya, as well as several countries that are short on resources but have relatively small maritime spaces to govern (e.g., The Gambia). The lowest levels of maritime enforcement are found in Somalia, the Southwest Indian Ocean, and off the coasts of Liberia and Sierra Leone.'
-        //  }
+        {
+          tag: 'img',
+          src: '../../assets/maritime-enforcement/maritime-enforcement-coin-cloud.png',
+          alt: 'Maritime Enforcement and related issues'
+        },
 
         {
           tag: 'p',
-          html: 'Naval, coastguard, and maritime police capacities in sub-Saharan Africa vary widely. Navies like those of Nigeria and South Africa are comparatively robust, but the gap separating these states from all other coastal sub-Saharan states is quite large.'
-        },
-        {
-          tag: 'img',
-          src: '../../assets/maritime-enforcement/global_military_spending-01.png',
-          alt: 'Pie graph'
-          //caption: 'al estimate.'
+          html: 'Our research finds that maritime enforcement capabilities are more closely associated with some maritime threats than with others. Piracy and armed robbery, for example, occur in target-rich environments, regardless of local maritime enforcement capacity. Trafficking in illicit goods that move through large seaports is also seemingly undeterred by coastal patrol capabilities. However, we do find that strong maritime enforcement capacity is closely associated with international cooperation and the development of the blue economy.'
         },
         {
           tag: 'p',
-          html: 'According to the <a href=\'https://www.iiss.org/-/media/documents/publications/the%20military%20balance/military%20balance%202016/mb2016%20further%20assessments.pdf?la=en.\' target=\'_blank\'>2016 Military Balance report</a>, Nigeria has more than five times as many vessels as any other country in the region. South Africa operates the region’s only submarines and is the only state with the capacity to engage in any kind of naval warfare. The disparity also applies to naval personnel, with the navies of just three countries (Nigeria, South Africa, and the Democratic Republic of the Congo comprising more than 60% of the region’s sailors.'
+          html: 'This section reviews the four main components of our score: EEZ difficulty, coastal patrol assets, maritime domain awareness, and naval capacity. The final card summarizes our methods and describes our data.'
         },
-        {
-          tag: 'p',
-          html: 'Conversely, the vast majority of sub-Saharan maritime security actors are extremely under-resourced. Liberia has a 50-member coast guard to patrol an EEZ larger than the land area of the United Kingdom. Thirteen states in the region have fewer than ten vessels each with which to provide security to their massive maritime domains, and these tend to be small inshore vessels incapable of providing more than basic coastal patrol operations.'
-        },
-        {
-          tag: 'p',
-          html: 'Enforcement capabilities are generally low given the severity of the maritime security threats seen across the region. The thirty sub-Saharan countries covered in this report have approximately 36,000 sailors in total, nearly 10,000 fewer than Japan’s Maritime Self-Defense Force.<sup>1</sup> This lack of capacity is a result of both limited resources and an understandable tendency across the region to focus on land-based security threats. Total sub-Saharan military spending in 2016 was $19.2 billion, just 1.1% of estimated global military spending,<sup>2</sup> despite the presence of several of the globe’s most active conflicts. Given the urgency with which African states must address security threats on shore, a relatively small share of African military spending is available to maintain maritime enforcement capability.'
-        },
-        {
-          tag: 'img',
-          src: '../../assets/maritime-enforcement/south_africa_navy_ltcommander_501416590.png',
-          alt: 'Lieutenant Commander Zimasa Mabela aboard South African naval vessel. Photo credit: Rodger Bosch/AFP/Getty Images.',
-          caption: 'Lieutenant Commander Zimasa Mabela aboard South African naval vessel. Photo credit: Rodger Bosch/AFP/Getty Images.'
-        }, //###Insert image
-        {
-          tag: 'p',
-          html: 'Despite this lack of resources, enforcement capacity in the region is steadily improving. The acquisition of additional maritime security assets and the continued development of actors’ human capital through investments in training, capacity building, and <a class="maritime-enforcement inline internal-ref" data-link="5">multilateral exercises</a> is giving regional forces the ability to more actively govern their maritime domains. This has resulted in an increasing number of enforcement operations countering maritime security threats such as <a class="fisheries inline" href="../../fisheries">illegal, unreported, and unregulated (IUU) fishing</a>, <a class="illicit-trade inline" href="../../illicit-trade">illicit trades</a>, and <a class="piracy inline" href="../../piracy">piracy</a>. Continuing to improve the region’s enforcement capacity will require additional resources, training, and regional cooperation.'
-        },
-        {
-          tag: 'img',
-          src: '../../assets/maritime-enforcement/bosaaso-port-police.jpg',
-          alt: 'Boasasso Port Police. Photo credit: Oceans Beyond Piracy.', // ### Spelling on Bosasso?
-          caption: 'Boasasso Port Police. Photo credit: Oceans Beyond Piracy.'
-        }, //###Insert image
-        {
-          tag: 'links',
-          items: [{
-              org: '<sup>1</sup> Céline Pajon, “Japan’s Coast Guard and Maritime Self-Defense Force: Cooperation among Siblings,” <em>Maritime Awareness Project</em>, December 1, 2016,',
-              url: 'http://maritimeawarenessproject.org/2016/12/01/japans-coast-guard-and-maritime-self-defense-force-cooperation-among-siblings/'
-            },
-            {
-              org: '<sup>2</sup> Nan Tian, Aude Fleurant, Pieter D. Wezeman and Siemont T Wezeman, “Trends in World Military Expenditure, 2016,” SIPRI, April 2017, p. 4',
-              url: 'https://www.sipri.org/sites/default/files/Trends-world-military-expenditure-2016.pdf'
-            },
-          ],
-        }
-
       ] // end of els array
     }, // End of first element of cards object
-    // {     // Card deprecatedd
-    //  title: 'Investing in Capacity',
-    //   menu: 'Investing in Capacity',
-    //   metadata: {
-    //     owner: 'Jay Benson',
-    //     description: 'Describe the rating system, discuss variation.'
-    //   },
-    //   map: {
-    //     path: '',
-    //     scale: [],
-    //     classes: 'card-eez-layer',
-    //     translate: [],
-    //     highlights: [],
-    //     load: function (index, file) {
-    //       // Color EEZ according to change in Corruption Perceptions Index
-    //       d3.select('.card-eez-layer')
-    //         .classed('card-' + index + '-layer', true);
-    //     },
-    //     switch: function (index) {
-    //       switchMainIndexInverse(index);
-    //     }
-    //   },  // end of 'map' object
-    //   els: [
-    //     { tag: 'h3',
-    //       text: 'Investing in Capacity'
-    //     },
-    //     { tag: 'caption',
-    //       text: 'Improving maritime security requires investment in enforcement'
-    //     },
-    //      { tag: 'legend',
-    //        text: 'Map Legend',
-    //        legendContent: '<em>Lighter shades indicate a greater number of coastal patrol vessels Source: 2016 Military Balance Report</em>'
-    //      },
-    //     { tag: 'p',
-    //       html: 'Naval, coastguard, and maritime police capacities in sub-Saharan Africa vary widely. Navies like those of Nigeria and South Africa are comparatively robust, but the gap separating these states from all other coastal sub-Saharan states is quite large.'
-    //     },
-    //     { tag: 'img',
-    //       src: '../../assets/maritime-enforcement/global_military_spending.png',
-    //       alt: 'Pie graph'
-    //       //caption: 'al estimate.'
-    //     },
-    //     { tag: 'p',
-    //       html: 'According to the <a href=\'https://www.iiss.org/-/media/documents/publications/the%20military%20balance/military%20balance%202016/mb2016%20further%20assessments.pdf?la=en.\' target=\'_blank\'>2016 Military Balance report</a>, Nigeria has more than five times as many vessels as any other country in the region. South Africa operates the region’s only submarines and is the only state with the capacity to engage in any kind of naval warfare. The disparity also applies to naval personnel, with the navies of just three countries (Nigeria, South Africa, and the Democratic Republic of the Congo comprising more than 60% of the region’s sailors.'
-    //     },
-    //     { tag: 'p',
-    //       html: 'Conversely, the vast majority of sub-Saharan maritime security actors are extremely under-resourced. Liberia has a 50-member coast guard to patrol an EEZ larger than the land area of the United Kingdom. Thirteen states in the region have fewer than ten vessels each with which to provide security to their massive maritime domains, and these tend to be small inshore vessels incapable of providing more than basic coastal patrol operations.'
-    //     },
-    //     { tag: 'p',
-    //       html: 'Enforcement capabilities are generally low given the severity of the maritime security threats seen across the region. The thirty sub-Saharan countries covered in this report have approximately 36,000 sailors in total, nearly 10,000 fewer than Japan’s Maritime Self-Defense Force.<sup>1</sup> This lack of capacity is a result of both limited resources and an understandable tendency across the region to focus on land-based security threats. Total sub-Saharan military spending in 2016 was $19.2 billion, just 1.1% of estimated global military spending,<sup>2</sup> despite the presence of several of the globe’s most active conflicts. Given the urgency with which African states must address security threats on shore, a relatively small share of African military spending is available to maintain maritime enforcement capability.'
-    //     },
-    //     { tag: 'img',
-    //       src: '../../assets/maritime-enforcement/south_africa_navy_ltcommander.png',
-    //       alt: 'Lieutenant Commander Zimasa Mabela aboard South African naval vessel. Photo credit: Rodger Bosch/AFP/Getty Images.',
-    //       caption: 'Lieutenant Commander Zimasa Mabela aboard South African naval vessel. Photo credit: Rodger Bosch/AFP/Getty Images.'
-    //     }, //###Insert image
-    //     { tag: 'p',
-    //       html: 'Despite this lack of resources, enforcement capacity in the region is steadily improving. The acquisition of additional maritime security assets and the continued development of actors’ human capital through investments in training, capacity building, and <a class="maritime-enforcement inline internal-ref" data-link="5">multilateral exercises</a> is giving regional forces the ability to more actively govern their maritime domains. This has resulted in an increasing number of enforcement operations countering maritime security threats such as <a class="fisheries inline" href="../../fisheries">illegal, unreported, and unregulated (IUU) fishing</a>, <a class="illicit-trade inline" href="../../illicit-trade">illicit trades</a>, and <a class="piracy inline" href="../../piracy">piracy</a>. Continuing to improve the region’s enforcement capacity will require additional resources, training, and regional cooperation.'
-    //     },
-    //     { tag: 'img',
-    //       src: '../../assets/maritime-enforcement/bosaaso-port-police.jpg',
-    //       alt: 'Boasasso Port Police. Photo credit: Oceans Beyond Piracy.', // ### Spelling on Bosasso?
-    //       caption: 'Boasasso Port Police. Photo credit: Oceans Beyond Piracy.'
-    //     }, //###Insert image
-    //     { tag: 'links',
-    //       items: [
-    //          {org: '<sup>1</sup> Céline Pajon, “Japan’s Coast Guard and Maritime Self-Defense Force: Cooperation among Siblings,” <em>Maritime Awareness Project</em>, December 1, 2016,', url: 'http://maritimeawarenessproject.org/2016/12/01/japans-coast-guard-and-maritime-self-defense-force-cooperation-among-siblings/'},
-    //           {org: '<sup>2</sup> Nan Tian, Aude Fleurant, Pieter D. Wezeman and Siemont T Wezeman, “Trends in World Military Expenditure, 2016,” SIPRI, April 2017, p. 4', url: 'https://www.sipri.org/sites/default/files/Trends-world-military-expenditure-2016.pdf'},
-    //       ],
-    //     }
-    //]
-    //}, // End of second  object in cards array
-    // Card 2
     { // Card 1
+      title: 'Assessing the Challenge',
+      menu: 'Assessing the Challenge',
+      metadata: {
+        owner: 'Jay Benson',
+        description: 'Importance of not only vessels, but communications and monitoring equipment.'
+      },
+      map: {
+        type: 'continuous',
+        path: '../../data/maritime-enforcement/information-sharing-centers.js',
+        scale: [],
+        classes: 'card-2-layer',
+        translate: [],
+        tooltip: true,
+        legend: 'Maritime Domain Awareness Score ####?',
+        tooltipHTML: function(iso) {
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso].mda;
+          tooltipVal = Math.round((tooltipVal * 100));
+          updatePointer(tooltipVal);
+          return "Maritime Domain Awareness:<br />" + tooltipVal + " / 100";
+
+        },
+        highlights: null,
+        load: function(index, file) {
+          var layer = 'card-' + index + '-layer';
+          classEEZ(layer);
+        },
+        switch: function(index) {
+          // Show loaded GIS layer
+          choropleth(index, 1, 'mda')
+
+        }
+      },
+      els: [{
+          tag: 'h1',
+          text: 'Assessing the Challenge'
+        },
+        {
+          tag: 'caption',
+          text: 'Measuring the scope of the need'
+        },
+        {
+          tag: 'p',
+          html: 'Every state in the Stable Seas Index is presented with a unique geographic challenge in ensuring the security of its maritime space. Stable Seas measures the scope of the hurdles presented to each state by its maritime geography, because this geography defines their maritime enforcement needs. When considering the scope of these geographic challenges four components are likely to be important:'
+        },
+        {
+          tag: 'ul',
+          rows: ['EEZ Size- EEZ’s across Africa range extensively in size. The Seychelles has an EEZ of 1,336,559 square km, which is larger than the land area of France, Spain and the United Kingdom combined (<a href="https://data.worldbank.org/indicator/AG.LND.TOTL.K2?year_high_desc=true" target="_blank">World Bank</a>). The Democratic Republic of Congo, by contrast, has an EEZ of 1,606 square km, roughly 832 times smaller. Obviously, this means they have significantly different needs when it comes to the capacity to provide security and governance in their respective maritime domains.','Coastline Length- Coastlines are important because they represent the space in which threats to security in the maritime domain can move onshore. Long coastlines are difficult to monitor, allowing opportunities for nontraditional security threat like trafficking in weapons, drugs and illicit goods to make their make their way onshore.', "Number of Maritime Boundaries- The number of maritime neighbors a state has is not a threat to security in itself, but higher numbers of maritime neighbors do present a problem of coordination and information sharing. Even more than on land, maritime boundaries are difficult to monitor and control and security threats at sea are inherently transnational. Without strong coordination and information sharing with maritime neighbors, effective responses to emerging threats at sea are incredibly difficult. In this vital coordination task, a state such as Madagascar, with five maritime neighbors, faces a more significant challenge than a state like Gambia, with only one.", "Number of Maritime Disputes- Territorial disputes represent a clear challenge to maritime security and governance. It is rare that they lead to actual armed conflict between states, but they often create areas of unclear or disputed authority at sea, hampering efforts to counter maritime crime and realize the full potential of the blue economy."]
+        },
+        {
+          tag: 'p',
+          html: 'The geography of Africa’s extensive maritime domain presents significant challenges but also incredible opportunities. By enhancing the region’s maritime enforcement capabilities through additional resources, improved maritime domain awareness, strengthened regional cooperation, and continued capacity building efforts, effective maritime security and governance can be provided, transforming this challenge into a tremendous asset.'
+        },
+        // {
+        //   tag: 'links',
+        //   items: [{
+        //       org: '<sup>1</sup> DefenceWeb, “European Union Enhances Maritime Awareness of Seychelles Air Force,” April 7, 2014,',
+        //       url: 'http://www.defenceweb.co.za/index.php?option=com_content&view=article&id=34272:european-union-enhances-maritime-awareness-of-seychelles-air-force&catid=35:Aerospace&Itemid=107'
+        //     },
+        //     {
+        //       org: '<sup>4</sup> CRIMARIO, “The IORIS Network,” 2016,',
+        //       url: 'http://www.crimario.eu/en/information-sharing/the-ioris-network/'
+        //     },
+        //     {
+        //       org: '<sup>5</sup> CRIMARIO, “Achievements,” 2017,',
+        //       url: 'http://www.crimario.eu/en/training/achievements/'
+        //     },
+        //   ],
+        // }
+      ]
+
+    },
+    { // Card 2
       title: 'Maritime Domain Awareness',
       menu: 'Maritime Domain Awareness',
       metadata: {
@@ -258,72 +165,29 @@ var maritimeEnforcementData = {
         description: 'Importance of not only vessels, but communications and monitoring equipment.'
       },
       map: {
+        type: 'continuous',
         path: '../../data/maritime-enforcement/information-sharing-centers.js',
         scale: [],
         classes: 'card-2-layer',
         translate: [],
+        tooltip: true,
+        legend: 'Maritime Domain Awareness Score ####?',
+        tooltipHTML: function(iso) {
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso].mda;
+          tooltipVal = Math.round((tooltipVal * 100));
+          updatePointer(tooltipVal);
+          return "Maritime Domain Awareness:<br />" + tooltipVal + " / 100";
+
+        },
         highlights: null,
         load: function(index, file) {
-          // Location and capability estimates of
-          // information sharing centers across Africa.
           var layer = 'card-' + index + '-layer';
-          d3.json(file, function(error, locations) {
-
-            var centers = mapg.append('g')
-              .classed('card-layer invisible ' + layer, true);
-
-            centers.selectAll('.centers')
-              .data(locations).enter()
-              .append('circle')
-              .attr('cx', function(d) {
-                return projection([d.lon, d.lat])[0];
-              })
-              .attr('cy', function(d) {
-                return projection([d.lon, d.lat])[1];
-              })
-              .attr('r', function(d) {
-                return d.names.length * 6 + 'px';
-              })
-              .attr('class', function(d) {
-                return d.type;
-              })
-              .classed('center-location', true)
-              .style('fill', function(d) {
-                if (d.type == 'national') {
-                  return colorBrew[0][0];
-                } else if (d.type == 'regional') {
-                  return colorBrew[1][0];
-
-                } else if (d.type == 'both') {
-                  return colorBrew[2][0];
-
-                }
-              })
-              .style('stroke', function(d) {
-                if (d.type == 'national') {
-                  return colorBrew[0][1];
-                } else if (d.type == 'regional') {
-                  return colorBrew[1][1];
-
-                } else if (d.type == 'both') {
-                  return colorBrew[2][1];
-
-                }
-              });
-
-
-          })
-
-          // Load file
-
-          // Class loaded GIS layer with layer
-
+          classEEZ(layer);
         },
         switch: function(index) {
           // Show loaded GIS layer
-          var target = 'card-' + index + '-layer';
+          choropleth(index, 1, 'mda')
 
-          d3.select('.' + target).classed('invisible', false);
         }
       },
       els: [{
@@ -333,11 +197,6 @@ var maritimeEnforcementData = {
         {
           tag: 'caption',
           text: 'A prerequisite for effective maritime governance'
-        },
-        {
-          tag: 'legend',
-          text: 'Map Legend',
-          legendContent: '<div class="brew-00">National information sharing centres.</div><br /><div class="brew-10">Regional information sharing centres.</div><br /><div class="brew-20">Both national and regional information sharing centres.</div><br />Circle diameter represents the number of centres present in a location.'
         },
         {
           tag: 'p',
@@ -521,19 +380,32 @@ var maritimeEnforcementData = {
     //   ]
     // }, // End of fourth  object in cards array
     // Card 3
-    { // Card 2
-      title: 'Coast Guards',
-      menu: 'Coast Guards',
+    { // Card 3
+      title: 'Coastal Patrol Assets',
+      menu: 'Coastal Patrol Assets',
       metadata: {
         owner: 'Jay Benson',
         description: 'Most states lack committed coast guards.'
       },
       map: {
+        type: 'continuous',
         path: '',
         scale: [],
         classes: 'card-4-layer',
         translate: [],
         highlights: null,
+        legend: 'Coastal Patrol Assets Score',
+      //  categories: ['Navy', 'Law Enforcement', 'Navy & Law Enforcement'],
+        tooltip: true,
+        tooltipHTML: function(iso) {
+
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso].vessels;
+        //  var legend = issueAreaData[issueArea].cards[activeCard].map.categories;
+        //   console.log(legend);
+           tooltipVal = Math.round((tooltipVal * 100));
+           updatePointer(tooltipVal);
+          return "Coastal Patrol Assets Score: " + tooltipVal + ' / 100';
+        },
         load: function(index, file) {
           // Color map with vessel score chloropleth ...
           var layer = 'card-' + index + '-layer';
@@ -541,67 +413,22 @@ var maritimeEnforcementData = {
         },
         switch: function(index) {
 
-          choropleth(/*params*/);
-          // var layer = 'card-' + index + '-layer';
-          // // Class countries per .xls 4.5 sheet
-          //
-          // var navies = ['CIV', 'ZAF', 'TGO', 'AGO', 'BEN', 'COG', 'COD', 'GNQ', 'GAB', 'GMB', 'GIN', 'GNB', 'MDG', 'MOZ', 'NAM', 'SLE', 'TZA'],
-          //   lawEnf = ['CPV', 'LBR', 'MUS', 'SYC', 'SOM'], // ### what about the small islands? Can hardly see them colored in ...
-          //   both = ['CMR', 'GHA', 'KEN', 'NGA', 'DJI', 'SEN'];
-          //
-          // navies.forEach(function(country, i) {
-          //   d3.selectAll('.country.' + country)
-          //     .classed('active', true)
-          //     .transition().delay(i * 10)
-          //     .style('fill', colorBrew[0][0])
-          //     .style('stroke', colorBrew[0][1]);
-          //
-          //   d3.selectAll('.eez.' + country)
-          //     .classed('active', true)
-          //     .transition().delay(i * 10)
-          //     .style('stroke', colorBrew[0][1]);
-          // });
-          //
-          // lawEnf.forEach(function(country, i) {
-          //   d3.selectAll('.country.' + country)
-          //     .classed('active', true)
-          //     .transition().delay(i * 10)
-          //     .style('fill', colorBrew[2][0])
-          //     .style('stroke', colorBrew[2][1]);
-          //
-          //   d3.selectAll('.eez.' + country)
-          //     .classed('active', true)
-          //     .transition().delay(i * 10)
-          //     .style('stroke', colorBrew[2][1]);
-          // });
-          //
-          // both.forEach(function(country, i) {
-          //   d3.selectAll('.country.' + country)
-          //     .classed('active', true)
-          //     .transition().delay(i * 10)
-          //     .style('fill', colorBrew[4][0])
-          //     .style('stroke', colorBrew[4][1]);
-          //
-          //   d3.selectAll('.eez.' + country)
-          //     .classed('active', true)
-          //     .transition().delay(i * 10)
-          //     .style('stroke', colorBrew[4][1]);
-          // });
+          choropleth(index, 1, 'vessels');
         }
       },
       els: [{
           tag: 'h1',
-          text: 'The Role of Coast Guards'
+          text: 'Coastal Patrol Assets'
         },
         {
           tag: 'caption',
           text: 'Policing African Waters'
         },
-        {
-          tag: 'legend',
-          text: 'Map Legend',
-          legendContent: '<div class="brew-00 legend-entries">Countries with a navy.</div><br /><div class="brew-20 legend-entries">Countries that have a coast guard.</div><br /><div class="brew-40 legend-entries">Countries with both a navy and a coast guard.</div><br /> <br> Source: <a href=\'https://www.iiss.org/-/media/documents/publications/the%20military%20balance/military%20balance%202016/mb2016%20further%20assessments.pdf?la=en.\' target=\'_blank\'>2016 Military Balance report</a>'
-        },
+        // {
+        //   tag: 'legend',
+        //   text: 'Map Legend',
+        //   legendContent: '<div class="brew-00 legend-entries">Countries with a navy.</div><br /><div class="brew-20 legend-entries">Countries that have a coast guard.</div><br /><div class="brew-40 legend-entries">Countries with both a navy and a coast guard.</div><br /> <br> Source: <a href=\'https://www.iiss.org/-/media/documents/publications/the%20military%20balance/military%20balance%202016/mb2016%20further%20assessments.pdf?la=en.\' target=\'_blank\'>2016 Military Balance report</a>'
+        // },
         {
           tag: 'p',
           html: 'Most states in sub-Saharan Africa have navies, but relatively few have forces such as coast guards dedicated to maritime law enforcement. While navies are built primarily for national defense and warfighting, maritime law enforcement is intended to counter a variety of illicit activities at sea, including but not limited to <a href="../../piracy" class="piracy inline">piracy</a>, <a href="../../human-trafficking" class="maritime-mixed-migration inline"> maritime mixed migration</a>, <a href="../../fisheries" class="fisheries inline">IUU fishing</a>, and transport of drugs, arms, and wildlife.<sup>9</sup>'
@@ -664,6 +491,111 @@ var maritimeEnforcementData = {
         }
       ]
     }, // End of fifth  object in cards array
+    { // Card 4
+      title: 'Improving Naval Capability',
+      menu: 'Improving Naval Capability',
+      metadata: {
+        owner: 'Curtis Bell',
+        description: 'Introduce the issue.'
+      },
+      map: {
+        type: 'continuous',
+        scale: [],
+        classes: 'card-eez-layer',
+        translate: [],
+        highlights: [],
+        tooltip: true,
+        legend: 'Naval Capability Assessment Score',
+        tooltipHTML: function(iso) {
+
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso]['navalCapacity'];
+          tooltipVal = Math.round(tooltipVal * 100);
+          updatePointer(tooltipVal);
+          return "Naval Capability Assessment Score:<br />" + tooltipVal + " / 100";
+
+        },
+        load: function(index, csv) { // ### *** This only should be for the first card ...
+          // Class EEZ with card-0-layer to enable switch() method
+          var layer = 'card-' + index + '-layer';
+          var l = d3.select('.card-eez-layer')
+            .classed(layer, true);
+        },
+        switch: function(index) {
+          choropleth(index, 1, 'navalCapacity');
+        }
+      },
+      els: [{
+          tag: 'h1',
+          text: 'Improving Naval Capability'
+        },
+        {
+          tag: 'caption',
+          text: 'Building capacity to enhance maritime governance'
+        },
+        // {
+        //   tag: 'legend',
+        //   text: 'Map Legend',
+        //   legendContent: '<em>Lighter shades indicate a greater number of coastal patrol vessels Source: 2016 Military Balance Report</em>'
+        // },
+        //
+        // {
+        //   tag: 'p',
+        //   html: 'Good maritime governance is not possible without navies and coast guards that are adequate for monitoring territorial waters and exclusive economic zones. Where states are up to this task, smugglers and traffickers cannot operate freely and fisheries laws are enforceable. However, inadequate capacity to govern the maritime space can hamper a country’s efforts to regulate maritime activity and effectively render any maritime legislation irrelevant. Poor capacity in this area provides tempting opportunities for those who seek to profit from the absence of real enforcement of maritime law.'
+        // },
+
+        {
+          tag: 'p',
+          html: 'Naval, coastguard, and maritime police capacities in sub-Saharan Africa vary widely. Navies like those of Nigeria and South Africa are comparatively robust, but the gap separating these states from all other coastal sub-Saharan states is quite large.'
+        },
+        {
+          tag: 'img',
+          src: '../assets/maritime-enforcement/global_military_spending-01.png',
+          alt: 'Pie graph'
+          //caption: 'al estimate.'
+        },
+        {
+          tag: 'p',
+          html: 'According to the <a href=\'https://www.iiss.org/-/media/documents/publications/the%20military%20balance/military%20balance%202016/mb2016%20further%20assessments.pdf?la=en.\' target=\'_blank\'>2016 Military Balance report</a>, Nigeria has more than five times as many vessels as any other country in the region. South Africa operates the region’s only submarines and is the only state with the capacity to engage in any kind of naval warfare. The disparity also applies to naval personnel, with the navies of just three countries (Nigeria, South Africa, and the Democratic Republic of the Congo comprising more than 60% of the region’s sailors.'
+        },
+        {
+          tag: 'p',
+          html: 'Conversely, the vast majority of sub-Saharan maritime security actors are extremely under-resourced. Liberia has a 50-member coast guard to patrol an EEZ larger than the land area of the United Kingdom. Thirteen states in the region have fewer than ten vessels each with which to provide security to their massive maritime domains, and these tend to be small inshore vessels incapable of providing more than basic coastal patrol operations.'
+        },
+        {
+          tag: 'p',
+          html: 'Enforcement capabilities are generally low given the severity of the maritime security threats seen across the region. The thirty sub-Saharan countries covered in this report have approximately 36,000 sailors in total, nearly 10,000 fewer than Japan’s Maritime Self-Defense Force.<sup>1</sup> This lack of capacity is a result of both limited resources and an understandable tendency across the region to focus on land-based security threats. Total sub-Saharan military spending in 2016 was $19.2 billion, just 1.1% of estimated global military spending,<sup>2</sup> despite the presence of several of the globe’s most active conflicts. Given the urgency with which African states must address security threats on shore, a relatively small share of African military spending is available to maintain maritime enforcement capability.'
+        },
+        {
+          tag: 'img',
+          src: '../assets/maritime-enforcement/south_africa_navy_ltcommander_501416590.png',
+          alt: 'Lieutenant Commander Zimasa Mabela aboard South African naval vessel. Photo credit: Rodger Bosch/AFP/Getty Images.',
+          caption: 'Lieutenant Commander Zimasa Mabela aboard South African naval vessel. Photo credit: Rodger Bosch/AFP/Getty Images.'
+        }, //###Insert image
+        {
+          tag: 'p',
+          html: 'Despite this lack of resources, enforcement capacity in the region is steadily improving. The acquisition of additional maritime security assets and the continued development of actors’ human capital through investments in training, capacity building, and <a class="maritime-enforcement inline internal-ref" data-link="5">multilateral exercises</a> is giving regional forces the ability to more actively govern their maritime domains. This has resulted in an increasing number of enforcement operations countering maritime security threats such as <a class="fisheries inline" href="../fisheries">illegal, unreported, and unregulated (IUU) fishing</a>, <a class="illicit-trade inline" href="../illicit-trade">illicit trades</a>, and <a class="piracy inline" href="../piracy">piracy</a>. Continuing to improve the region’s enforcement capacity will require additional resources, training, and regional cooperation.'
+        },
+        {
+          tag: 'img',
+          src: '../assets/maritime-enforcement/bosaaso-port-police.jpg',
+          alt: 'Boasasso Port Police. Photo credit: Oceans Beyond Piracy.', // ### Spelling on Bosasso?
+          caption: 'Boasasso Port Police. Photo credit: Oceans Beyond Piracy.'
+        }, //###Insert image
+        {
+          tag: 'links',
+          items: [{
+              org: '<sup>1</sup> Céline Pajon, “Japan’s Coast Guard and Maritime Self-Defense Force: Cooperation among Siblings,” <em>Maritime Awareness Project</em>, December 1, 2016,',
+              url: 'http://maritimeawarenessproject.org/2016/12/01/japans-coast-guard-and-maritime-self-defense-force-cooperation-among-siblings/'
+            },
+            {
+              org: '<sup>2</sup> Nan Tian, Aude Fleurant, Pieter D. Wezeman and Siemont T Wezeman, “Trends in World Military Expenditure, 2016,” SIPRI, April 2017, p. 4',
+              url: 'https://www.sipri.org/sites/default/files/Trends-world-military-expenditure-2016.pdf'
+            },
+          ],
+        }
+
+      ] // end of els array
+    },
     // { // Card 4
     //   title: 'The Role of Multinational Exercises',
     //   menu: 'The Role of Multinational Exercises',
@@ -950,82 +882,96 @@ var maritimeEnforcementData = {
     //   ]
     // },
     // // Card 7
-    { // Card 3
-      title: 'Methodology',
-      menu: 'Methodology',
+    { // Card 4
+      title: 'Data and Methods',
+      menu: 'Data and Methods',
       metadata: {
         owner: 'Curtis Bell',
         description: 'Methods.'
       },
       map: {
+        type: 'continuous',
         scale: [],
         classes: 'card-7-layer',
         translate: [],
         highlights: null,
-        load: function (index, file) {  // ### *** This only should be for the first card ...
+        tooltip: true,
+        legend: 'Maritime Enforcement Score',
+        tooltipHTML: function(iso) {
+          var tooltipVal = issueAreaData[issueArea].metadata.countryData[iso].index;
+          tooltipVal = Math.round((tooltipVal * 100));
+          updatePointer(tooltipVal);
+          return "Maritime Enforcement:<br />" + tooltipVal + " / 100";
+
+        },
+        load: function(index, file) { // ### *** This only should be for the first card ...
           // Color EEZ according to master Stable Seas index
-          var layer = 'card-'+index+'-layer';
+          var layer = 'card-' + index + '-layer';
 
           d3.select('.card-eez-layer')
             .classed(layer, true);
         },
-        switch: function (index) {
-          switchMainIndexInverse(0);
+        switch: function(index) {
+          choropleth(index, 1, 'index');
         }
       },
-      els: [
-        { tag: 'h3',
+      els: [{
+          tag: 'h1',
           text: 'Methodology'
         },
         // { tag: 'legend',
         //   text: 'Map Legend',
         //   legendContent: '<em>Lighter shades indicate greater maritiime enforcement capability</em>'
         // },
-        // { tag: 'p',
-        //    text: 'The Maritime Enforcement score consists of three equally weighted parts: the difficulty of governing the specific maritime space, a quantitative measure of capability based on fleet size, and a qualitative expert assessment of enforcement capacity and international assistance received. Each of these parts is briefly introduced below, with more detailed technical notes in the data documentation available for download.'
-        // },
-        // { tag: 'h4',
-        //   text: 'Geography'
-        // },
-        // { tag: 'p',
-        //    text: 'We score the effect of EEZ geography on a state’s capacity to govern by considering two equally weighted factors: EEZ size and coastline length. Though these two concepts are correlated, they can diverge based on the shape of the coastline and the arrangement of neighboring EEZs. Cameroon, for example, has a very low EEZ-to-coastline ratio because its offshore claims quickly meet those of island neighbors like Equatorial Guinea. Conversely, Cabo Verde’s relative isolation in the mid-Atlantic means it has an EEZ that extends many nautical miles in all directions.'
-        // },
-        // { tag: 'p',
-        //    html: 'Data on EEZ size is drawn from <a href="www.maritimeregions.org" target="_blank">www.maritimeregions.org</a>, an online gazetteer produced by the Flanders Maritime Institute. This resource contains comprehensive geospatial and legal information about maritime spaces around the world. Coastline lengths are taken from the CIA World Factbook.'
-        // },
-        // { tag: 'p',
-        //    text: 'The difficulty score also accounts for the effect poor maritime relations can have on making EEZs more difficult to govern. Two factors inform relations with maritime neighbors: the number of EEZ neighbors and the proportion of those neighbors a state has come to a formal mutual agreement with about the placement of maritime boundaries. We draw both measures from data from the Flanders Maritime Institute. We argue that the difficulty of patrolling a maritime space increases with the number of direct maritime neighbors and further argue that it is even more difficult when borders are disputed or unestablished.'
-        // },
-        // { tag: 'h4',
-        //   text: 'Fleet Size'
-        // },
-        // { tag: 'p',
-        //    html: 'We include data about the number of significant vessels available to federal forces, which may include a navy, coast guard, port police, and/or maritime division of another branch of the armed forces. We derive these ship counts from <i>Military Balance</i>, which is an annual global report from the International Institute for Strategic Studies.'
-        // },
-        // { tag: 'p',
-        //    text: 'We separate two types of vessels to measure two types of naval capacity: coastal patrol vessels, which provide countries with the ability to monitor activity near the coast, and surface warfare craft, which allow for a stronger enforcement presence farther offshore into a state’s exclusive economic zone and beyond.'
-        // },
-        // { tag: 'p',
-        //    text: 'As opposed to other naval power measures that focus on weaponry and the ability to exert force well into neighboring ocean basins, this count of vessels focuses on two skills that help states govern their EEZs: the ability to patrol the coasts and the ability to project force across the deeper waters of an EEZ.'
-        // },
-        // { tag: 'p',
-        //    text: 'Both measures are simple vessel counts that do not take into account age, working condition, or funding, but we address these factors in the expert assessments of capability and international assistance.'
-        // },
-        // { tag: 'h4',
-        //    text: 'Expert Assessment of Capability'
-        // },
-        // { tag: 'p',
-        //    text: 'Counts of vessels and displacement tonnage miss some aspects of naval capability. Equipment can be outdated, support vessels may hinder naval effectiveness, and insufficient ongoing commitments may mean navies are underfunded and undertrained. We use an expert assessment to gauge what activities fall within and beyond the capabilities of African navies.'
-        // },
-        // { tag: 'p',
-        //    html: 'We adopt the Typology for Navies provided by <i>Leadmark: The Navy’s Strategy for 2020</i>, which was completed by the Canadian Navy. Using this 10-tier rating system, we asked four experts to independently evaluate and score the 30 African littoral states. The ratings were correlated at well over 0.90, so the ratings were averaged into a single capability score ranging from 4 (South Africa) to 10 (Somalia). For the purpose of patrolling an EEZ, further developments above “Medium Regional Force Projection” are unnecessary, as levels above that describe the ability to project power out into an ocean basin.'
-        // },
-        // { tag: 'p',
-        //    text: 'Finally, many navies receive substantial international assistance with governing their maritime spaces. This assistance ranges from multilateral naval patrols to donations of training, vessels, and communications equipment. We asked four experts to assess the extent of four kinds of international assistance to each African navy: (1) training, (2) equipment, (3) exercises, and (4) patrols.'
-        // },
-        // { tag: 'p',
-        //    text: 'Respondents classified each of these aspects of international assistance according to the following scale: (0) no evidence of assistance, (1) evidence of infrequent/limited assistance, (2) recipient of minor assistance, (3) recipient of consistent and significant assistance, and (4) major recipient of formalized and large-scale assistance.'
-        // }
+        {
+          tag: 'p',
+          text: 'We measure and define Maritime Enforcement as each country’s capacity to effectively patrol its territorial waters and EEZ for the purposes of investigating illicit activity and enforcing maritime law. The score is not concerned with legal regimes or naval warfighting efforts, though both of these related concepts are greatly affected by Maritime Enforcement. Rather, this score focuses on the difficulty of managing a state’s specific maritime space, its capacity to perform constabulary duties in that space, and the development and regional integration of its maritime domain awareness systems.'
+        },
+
+        {
+          tag: 'p',
+          text: 'We measure the Maritime Enforcement Score with four components:'
+        },
+        {
+          tag: 'h4',
+          text: 'Difficulty'
+        },
+        {
+          tag: 'p',
+          html: 'States face unique challenges depending on the geography of their maritime space. Our difficult score captures this variation by considering factors like coastline length, EEZ size, and relations between each country and its immediate maritime neighbors.'
+        },
+        {
+          tag: 'h4',
+          text: 'Coastal Patrol Assets'
+        },
+        {
+          tag: 'p',
+          text: 'We measure the number of coastal patrol vessels available to federal forces, which may include a navy, coast guard, port police, and/or other maritime enforcement division. We derive these vessel counts from The Military Balance 2016, an annual global report from the International Institute for Strategic Studies (IISS). This report did not include information for Sao Tome and Principe or Comoros, so we supplemented these data with in-house research and inquiries to regional stakeholders. We adopt the coastal patrol vessel definition from the Military Balance report:'
+        },
+        {
+          tag: 'blockquote',
+          html: 'Patrol and Coast Combatants: “surface vessels designed for coastal or inshore operations. These include corvettes... offshore patrol ships…, patrol craft…, and patrol boats.”'
+        },
+        {
+          tag: 'h4',
+          text: 'Expert Assessment of Naval Capacity'
+        },
+        {
+          tag: 'p',
+          html: 'Counts of vessels miss some important aspects of naval capability. Equipment can be outdated and navies can be underfunded or inadequately trained. To address this reality and complement our Coastal Patrol Vessels Component, we use an in-house expert assessment to measure naval capability by gauging what activities fall within and beyond the capabilities of African navies.'
+        },
+        {
+          tag: 'h4',
+          text: 'Expert Assessment of Maritime Domain Awareness (MDA)'
+        },
+        {
+          tag: 'p',
+          html: 'Finally, we assess the extent to which a country has made a deliberate commitment to establishing the onshore infrastructure needed to develop maritime domain awareness. It takes into account the establishment of Maritime Operations Centers (MOCs), the information gathering, processing and sharing capabilities of those MOCs, and the county\'s level of integration into multinational MSA constructs, such as participation in regional MOCs or Zone information sharing arrangements.'
+        },
+        {
+          tag: 'p',
+          text: 'More details about all of these scores are available on our data page.'
+        }
       ]
     } // End of eighth  object in cards array
   ] // End of cards array
